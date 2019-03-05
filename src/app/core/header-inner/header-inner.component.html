@@ -1,0 +1,45 @@
+<div class="navbar-custom-menu">
+  <ul class="nav navbar-nav">
+    <!-- Messages: style can be found in dropdown.less -->
+
+    <li mk-dropdown type="list" [isWrapper]="false" class="user user-menu">
+      <mk-dropdown-toggle>
+        <a #toggleElement>
+          <img src="https://scontent.felp1-1.fna.fbcdn.net/v/t1.0-1/p160x160/45824996_10158096759704698_3165465157136547840_n.jpg?_nc_cat=105&_nc_ht=scontent.felp1-1.fna&oh=b15e4bc9da3c94d23e11f9ff8ad3748d&oe=5D246294" class="user-image" alt="User Image">
+          <span class="hidden-xs">Alejandro VM</span>
+        </a>
+      </mk-dropdown-toggle>
+      <mk-dropdown-menu>
+        <li class="user-header">
+          <img src="https://scontent.felp1-1.fna.fbcdn.net/v/t1.0-1/p160x160/45824996_10158096759704698_3165465157136547840_n.jpg?_nc_cat=105&_nc_ht=scontent.felp1-1.fna&oh=b15e4bc9da3c94d23e11f9ff8ad3748d&oe=5D246294" class="img-circle" alt="User Image">
+
+          <p>
+            Alejandro VM - Web Developer
+            <small>Member since Nov. 2012</small>
+          </p>
+        </li>
+        <li class="user-body">
+          <div class="row">
+            <div class="col-xs-4 text-center">
+              <a href="#">OP-1</a>
+            </div>
+            <div class="col-xs-4 text-center">
+              <a href="#">OP-2</a>
+            </div>
+            <div class="col-xs-4 text-center">
+              <a href="#">OPT-3</a>
+            </div>
+          </div>
+        </li>
+        <li class="user-footer">
+          <div class="pull-left">
+            <a href="#/profile" class="btn btn-default btn-flat">Profile</a>
+          </div>
+          <div class="pull-right">
+            <a href="/" class="btn btn-default btn-flat" (click)="onLogout()">Sign out</a>
+          </div>
+        </li>
+      </mk-dropdown-menu>
+    </li>
+  </ul>
+</div>

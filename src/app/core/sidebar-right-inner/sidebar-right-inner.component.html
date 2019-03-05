@@ -1,0 +1,96 @@
+<mk-tabs styleClass="sidebar-right-tabs-wrapper" navStyleClass="nav nav-tabs nav-justified control-sidebar-tabs">
+  <mk-tab>
+    <mk-tab-header>
+      <i class="fa fa-wrench"></i>
+    </mk-tab-header>
+    <mk-tab-content>
+      <div>
+        <h4 class="control-sidebar-heading">Layout Options</h4>
+        <div class="form-group">
+          <label class="control-sidebar-subheading"><input type="checkbox" (change)="onLayoutChange($event)" value="fixed" [checked]="layout === 'fixed'" class="pull-right"> Fixed layout</label>
+          <p>Activate the fixed layout. You can't use fixed and boxed layouts together</p>
+        </div>
+        <div class="form-group">
+          <label class="control-sidebar-subheading"><input type="checkbox" (change)="onLayoutChange($event)" value="boxed" [checked]="layout === 'boxed'" class="pull-right"> Boxed Layout</label>
+          <p>Activate the boxed layout</p>
+        </div>
+        <div class="form-group">
+          <label class="control-sidebar-subheading"><input type="checkbox" [checked]="isSidebarLeftCollapsed" #sidebarLeftCollapsedCheckbox (click)="layoutStore.sidebarLeftCollapsed(sidebarLeftCollapsedCheckbox.checked)" class="pull-right"> Toggle Sidebar</label>
+          <p>Toggle the left sidebar's state (open or collapse)</p>
+        </div>
+        <div class="form-group">
+          <label class="control-sidebar-subheading"><input type="checkbox" [disabled]="isSidebarLeftExpandOnOver" [checked]="isSidebarLeftMini" #sidebarLeftMini (click)="layoutStore.sidebarLeftMini(sidebarLeftMini.checked)" class="pull-right"> Sidebar Left Mini</label>
+          <p>Let the sidebar left collapsed visible</p>
+        </div>
+        <div class="form-group">
+          <label class="control-sidebar-subheading"><input type="checkbox" [disabled]="!isSidebarLeftMini" [checked]="isSidebarLeftExpandOnOver && isSidebarLeftMini" #sidebarLeftExpandOnOverCheckbox (click)="layoutStore.sidebarLeftExpandOnOver(sidebarLeftExpandOnOverCheckbox.checked)" class="pull-right"> Sidebar Expand on Hover</label>
+          <p>Let the sidebar mini expand on hover</p>
+        </div>
+        <div class="form-group">
+          <label class="control-sidebar-subheading"><input type="checkbox" #sidebarRightOverContentCheckbox (click)="layoutStore.sidebarRightOverContent(!sidebarRightOverContentCheckbox.checked)" class="pull-right"> Toggle Right Sidebar Slide</label>
+          <p>Toggle between slide over content and push content effects</p>
+        </div>
+        <div class="form-group">
+          <label class="control-sidebar-subheading"><input type="checkbox" #sidebarRightSkinCheckbox (click)="changeSidebarRightSkin(sidebarRightSkinCheckbox.checked)" class="pull-right"> Toggle Right Sidebar Skin</label>
+          <p>Toggle between dark and light skins for the right sidebar</p>
+        </div>
+
+        <h4 class="control-sidebar-heading">Skins</h4>
+        <ul class="list-unstyled clearfix">
+          <li style="float:left; width: 33.33333%; padding: 5px;">
+            <a href="#" (click)="changeSkin($event, 'blue')" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+              <div><span style="display:block; width: 20%; float: left; height: 7px; background: #367fa9;"></span><span class="bg-light-blue" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+              <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32;"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7;"></span></div>
+            </a>
+            <p class="text-center no-margin">Blue</p>
+          </li>
+
+          <li style="float:left; width: 33.33333%; padding: 5px;">
+            <a href="#" (click)="changeSkin($event, 'black')" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+              <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe;"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe;"></span></div>
+              <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222;"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7;"></span></div>
+            </a>
+            <p class="text-center no-margin">Black</p>
+          </li>
+
+          <li style="float:left; width: 33.33333%; padding: 5px;">
+            <a href="#" (click)="changeSkin($event, 'blue-light')" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+              <div><span style="display:block; width: 20%; float: left; height: 7px; background: #367fa9;"></span><span class="bg-light-blue" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+              <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc;"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7;"></span></div>
+            </a>
+            <p class="text-center no-margin" style="font-size: 12px">Blue Light</p>
+          </li>
+          <li style="float:left; width: 33.33333%; padding: 5px;">
+            <a href="#" (click)="changeSkin($event, 'black-light')" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+              <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe;"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe;"></span></div>
+              <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc;"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7;"></span></div>
+            </a>
+            <p class="text-center no-margin" style="font-size: 12px">Black Light</p>
+          </li>
+
+        </ul>
+      </div>
+    </mk-tab-content>
+  </mk-tab>
+
+  <mk-tab>
+    <mk-tab-header><i class="fa fa-home"></i></mk-tab-header>
+    <mk-tab-content>
+      <h3 class="control-sidebar-heading">Recent Activity</h3>
+
+    </mk-tab-content>
+  </mk-tab>
+
+
+  <mk-tab>
+    <mk-tab-header><i class="fa fa-gears"></i></mk-tab-header>
+    <mk-tab-content>
+      <!-- Settings tab content -->
+      <div class="tab-pane" id="control-sidebar-settings-tab">
+        <form method="post">
+          <h3 class="control-sidebar-heading">General Settings</h3>
+        </form>
+      </div>
+    </mk-tab-content>
+  </mk-tab>
+</mk-tabs>

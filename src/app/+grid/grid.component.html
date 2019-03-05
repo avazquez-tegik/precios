@@ -1,0 +1,34 @@
+<ag-grid-angular
+  style="width: 100%;"
+  class="ag-theme-balham"
+  [rowData]="rowData"
+  [columnDefs]="columnDefs"
+  [rowDragManaged]="true"
+  [animateRows]="true"
+  (gridReady)="onGridReady($event)"
+>
+</ag-grid-angular>
+
+<div>
+  <br />
+  <div style="padding-bottom: 4px;">
+    <label> File Name: <input type="text" id="fileName" /> </label>
+    <label style="margin-left: 20px;">
+      Separator <input type="text" style="width: 20px;" id="columnSeparator" />
+    </label>
+    <label style="margin-left: 20px;">
+      <button (click)="onBtExport()">Export to CSV</button>
+    </label>
+  </div>
+  <table>
+    <tbody>
+      <tr>
+        <td valign="top">
+          <label style="margin-right: 20px;">
+            <input type="checkbox" id="allColumns" /> All Columns
+          </label>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
