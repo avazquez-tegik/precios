@@ -26,7 +26,7 @@ export class ChartComponent implements OnInit {
   constructor() {
   }
   ngOnInit() {
-    Highcharts.chart(this.container.nativeElement, {
+   /* Highcharts.chart(this.container.nativeElement, {
       // Created pie chart using Highchart
       chart: {
         type: 'pie',
@@ -77,7 +77,7 @@ export class ChartComponent implements OnInit {
           ]
         }]
       }
-    })
+    })*/
   }
 
 }

@@ -40,12 +40,12 @@ rowData = [
 
 onBtExport() {
   let params: any;
-params = {
+/*params = {
 
     allColumns: getBooleanValue('#allColumns'),
     fileName: document.querySelector('#fileName').value,
     columnSeparator: document.querySelector('#columnSeparator').value
-  };
+  };*/
   this.gridApi.exportDataAsCsv(params);
 }
 
