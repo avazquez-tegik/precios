@@ -10,8 +10,8 @@ export const adminLteConf = {
   // layout: 'normal',
   sidebarLeftMenu: [
     {label: 'CONTENIDO', separator: true},
-    {label: 'Accordion', route: 'accordion', iconClasses: 'fa fa-tasks'},
-    {label: 'Tabla Pivote', route: 'pivot', iconClasses: 'fa fa-bar-chart'},
+    {label: 'Precios', route: 'precios', iconClasses: 'fa fa-shopping-cart'},
+   /* {label: 'Tabla Pivote', route: 'pivot', iconClasses: 'fa fa-bar-chart'},
     {label: 'Grafica', route: 'chart', iconClasses: 'fa fa-pie-chart'},
     {label: 'Reporte Excel', route: 'exportexcel', iconClasses: 'fa fa-mail-forward'},
     {label: 'Grid', route: 'grid', iconClasses: 'fa fa-th'},
@@ -23,6 +23,6 @@ export const adminLteConf = {
 
       {label: 'Tabs', route: 'tabs', iconClasses: 'fa fa fa-th-list'},
       {label: 'Login', route: '/', iconClasses: 'fa fa-user'},
-      {label: 'Register', route: 'register', iconClasses: 'fa fa-vcard-o'},
+      {label: 'Register', route: 'register', iconClasses: 'fa fa-vcard-o'},*/
   ]
 };
