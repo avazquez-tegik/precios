@@ -1,0 +1,84 @@
+<div class="container-fluid">
+  <br>
+  <div class="row">
+    <div class="col-12 col-md-3">
+      <div class="list-group">
+        <a class="list-group-item waves-light" [ngClass]="{'active': filtro == 'cadena'}" (click)="filtro='cadena'">
+          Tiendas
+        </a>
+        <a class="list-group-item list-group-item-action waves-light" [ngClass]="{'active': filtro == 'orden'}" (click)="filtro='orden'">Filtros</a>
+      </div>
+      <div class="card" style="height: 100vh" *ngIf="filtro=='cadena'">
+        <div class="card-body" [formGroup]="optionCadenasForm">
+          Supermercados
+          <ul>
+            <li>
+              <input type="checkbox" formControlName="soriana">Soriana
+            </li>
+            <li> <input type="checkbox" formControlName="heb">HEB
+            </li>
+          </ul>
+          Departamentales
+          <ul>
+            <li>
+              <input type="checkbox" formControlName="sears">Sears</li>
+            <li><input type="checkbox" formControlName="sanborns">Sanbors</li>
+            <li><input type="checkbox" formControlName="liverpool">Liverpool
+            </li>
+          </ul>
+          Electronica
+          <ul>
+            <li>
+              <input type="checkbox" formControlName="bestbuy">BestBuy
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="card" style="height: 100vh" *ngIf="filtro=='orden'">
+      </div>
+    </div>
+    <div class="col-12 col-md-9">
+
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Articulo" aria-label="Articulo" aria-describedby="button-addon2" [(ngModel)]="text">
+        <div class="input-group-append">
+          <button color="default" outline="true" size="md" class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="find()">Buscar</button>
+        </div>
+      </div>
+      <div class="row">
+        <div *ngIf="buscando" class="spinner-border" style="margin: auto" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-12 col-md-3" *ngFor="let item of list">
+          <div class="card">
+            <div class="view view-cascade overlay waves-light">
+              <img src="{{item.imagen}}" class="img-fluid">
+              <a>
+                <div class="mask rgba-white-slight" class="card-img-top"></div>
+              </a>
+            </div>
+            <div class="card-body" cascade="true" class="text-center">
+              <h4 class="card-title">
+                <strong> {{item.precio}}</strong>
+              </h4>
+              <p class="card-text">
+                {{item.titulo}}
+              </p>
+              <a class="px-1 icons-sm li-ic" href="{{item.enlace_informacion}}">
+                <img *ngIf="item.cadena == 'HEB'" src="assets/img/heb.png" class="img-fluid icon">
+                <img *ngIf="item.cadena == 'Soriana'" src="assets/img/soriana.png" class="img-fluid icon">
+                <img *ngIf="item.cadena == 'liverpool'" src="assets/img/liverpool.png" class="img-fluid icon">
+                <img *ngIf="item.cadena == 'sears'" src="assets/img/sears.jpeg" class="img-fluid icon">
+                <img *ngIf="item.cadena == 'bestbuy'" src="assets/img/bestbuy.png" class="img-fluid icon">
+                <img *ngIf="item.cadena == 'sanborns'" src="assets/img/sanborns.png" class="img-fluid icon">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

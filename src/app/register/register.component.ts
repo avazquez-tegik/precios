@@ -27,14 +27,14 @@ export class RegisterComponent implements OnInit {
       .then((res) => {
         this.authService.isAuth().subscribe(user => {
           if (user) {
-              this.router.navigate(['/home']);
+              this.router.navigate(['/precios/lista']);
           }
         });
       }).catch(err => console.log('err', err.message));
   }
 
   onLoginRedirect(): void {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/precios/lista']);
   }
 
 }

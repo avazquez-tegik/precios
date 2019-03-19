@@ -10,7 +10,7 @@ export const adminLteConf = {
   // layout: 'normal',
   sidebarLeftMenu: [
     {label: 'CONTENIDO', separator: true},
-    {label: 'Precios', route: 'precios', iconClasses: 'fa fa-shopping-cart'},
+    {label: 'Precios', route: 'precios/lista', iconClasses: 'fa fa-shopping-cart'},
    /* {label: 'Tabla Pivote', route: 'pivot', iconClasses: 'fa fa-bar-chart'},
     {label: 'Grafica', route: 'chart', iconClasses: 'fa fa-pie-chart'},
     {label: 'Reporte Excel', route: 'exportexcel', iconClasses: 'fa fa-mail-forward'},

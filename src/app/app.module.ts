@@ -9,7 +9,6 @@ import { CoreModule } from './core/core.module';
 import { LayoutModule } from 'angular-admin-lte';
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
 
 import { LoadingPageModule, MaterialBarModule } from 'angular-loading-page';
 import { ExcelExportModule } from '@progress/kendo-angular-excel-export';
@@ -33,8 +32,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
     AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
   declarations: [
-    AppComponent,
-    HomeComponent
+    AppComponent
+    
 ],
 providers: [AngularFireAuth, AngularFirestore],
 bootstrap: [AppComponent]
