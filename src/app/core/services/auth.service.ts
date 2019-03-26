@@ -43,6 +43,7 @@ export class AuthService {
     const data: UserInterface = {
       id: user.uid,
       email: user.email,
+      img_profile: 'https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg',
       roles: {
         editor: true
       }
@@ -54,6 +55,7 @@ export class AuthService {
   isUserAdmin(userUid) {
     return this.afs.doc<UserInterface>(`users/${userUid}`).valueChanges();
   }
+
 
 
 }

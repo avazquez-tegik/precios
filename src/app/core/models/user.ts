@@ -9,4 +9,5 @@ export interface UserInterface {
   email?: string;
   password?: string;
   roles: Roles;
+  img_profile: string;
 }

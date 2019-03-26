@@ -1,33 +1,22 @@
 <div class="login-box">
-    <div class="login-logo">
-      <a><b>Admin</b>App</a>
-    </div>
-
-    <div class="login-box-body">
-      <p class="login-box-msg">Sign up to start your session</p>
-      <div class="card-body text-center">
-              <form #formRegister="ngForm" (ngSubmit)="onAddUser()">
-                <h1 class="h3 mb-3 font-weight-normal">Register</h1>
-
-                <div class="form-group">
-                  <input type="email" name="email" class="form-control" placeholder="Email" [(ngModel)]="email" required minlength="8">
-                </div>
-
-                <div class="form-group">
-                  <input type="password" name="password" class="form-control" placeholder="Password" [(ngModel)]="password" required minlength="5"
-                    maxlength="10">
-                </div>
-
-                <button type="submit" class="btn btn-lg btn-primary btn-block">Register</button>
-
-
-                <div class="form-group">
-                  <a routerLink="/" class="form-control login-user">Do you have account?</a>
-                </div>
-              </form>
-
-            </div>
-          </div>
+  <div class="login-logo">
+    <!--<a><b>Admin</b>App</a>!-->
+  </div>
+  <div class="login-box-body">
+    <p class="login-box-msg">Registrar tu usuario</p>
+    <div class="card-body text-center">
+      <form #formRegister="ngForm" (ngSubmit)="onAddUser()">
+        <div class="form-group">
+          <input type="email" name="email" class="form-control" placeholder="Correo" [(ngModel)]="email" required minlength="8">
         </div>
-
-
+        <div class="form-group">
+          <input type="password" name="password" class="form-control" placeholder="Contraseña" [(ngModel)]="password" required minlength="5" maxlength="10">
+        </div>
+        <button type="submit" class="btn btn-lg btn-primary btn-block">Registrarte</button>
+        <div class="form-group">
+          <a routerLink="/" class="form-control login-user">¿Ya tienes cuenta?</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
