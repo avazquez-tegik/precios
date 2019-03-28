@@ -8,20 +8,14 @@
           <div class="box box-info">
             <div class="box-body">
               <div class="col-sm-6">
-                <div align="center">
-                  <img
-                    alt="User Pic"
-                    src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
-                    id="profile-image1"
-                    class="img-circle img-responsive"
-                  />
-
-                  <input id="profile-image-upload" class="hidden" type="file" />
-                  <div style="color:#999;">
-                    click here to change profile image
-                  </div>
-                  <!--Upload Image Js And Css-->
+          <div class="preview text-center">
+                <img class="preview-img" src="http://simpleicon.com/wp-content/uploads/account.png" alt="Preview Image" width="200" height="200"/>
+                <div class="browse-button">
+                    <i class="fa fa-pencil-alt"></i>
+                    <input class="browse-input" type="file" required name="UploadedFile" id="UploadedFile"/>
                 </div>
+                <span class="Error"></span>
+            </div>
 
                 <!-- /input-group -->
               </div>

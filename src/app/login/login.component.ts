@@ -14,6 +14,8 @@ export class LoginComponent implements OnInit {
   public email = '';
   public password = '';
   public auth: any;
+
+  public isError: boolean= false;
   ngOnInit() {
 
     this.afAuth.authState.subscribe(auth => {

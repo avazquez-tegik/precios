@@ -9,22 +9,7 @@ const routes: Routes = [{
     data: {
       customLayout: true
     }
-  },
-  {
-    path: 'accordion',
-    loadChildren: './+accordion/accordion.module#AccordionModule',
-    data: {
-      title: 'Accordion',
-      canActivate: [AuthGuard]
-    }
-  }, {
-    path: 'pivot',
-    loadChildren: './+pivot/pivot.module#PivotModule',
-    data: {
-      title: 'Pivot',
-      canActivate: [AuthGuard]
-    }
-  },
+  }, 
   {
     path: 'tabs',
     loadChildren: './+tabs/tabs.module#TabsModule',
@@ -100,8 +85,11 @@ const routes: Routes = [{
       canActivate: [AuthGuard]
     }
   },
-  { path: '**', redirectTo: 'precios/lista',     pathMatch: 'full',
- }
+  {
+    path: '**',
+    redirectTo: 'precios/lista',
+    pathMatch: 'full',
+  }
 ];
 
 @NgModule({
