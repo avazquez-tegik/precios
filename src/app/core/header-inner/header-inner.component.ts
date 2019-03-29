@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs';
 import { UserInterface } from '../models/user';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'app-header-inner',
@@ -11,18 +11,14 @@ import { UserInterface } from '../models/user';
 
 export class HeaderInnerComponent implements OnInit {
 
-  public user: UserInterface  ;
+  public user: UserInterface;
 
 
   constructor(private authService: AuthService, private afsAuth: AngularFireAuth) {}
 
   ngOnInit() {
-    this.afsAuth.authState.subscribe(userAuth => {
-      this.authService.isUserAdmin(userAuth.uid).subscribe(user=>{
-      	this.user=user;
-      	console.log(this.user);
-
-      })
+    this.authService.getUser().subscribe(user => {
+      this.user = user;
     });
   }
 

@@ -4,13 +4,14 @@ import { map } from 'rxjs/operators';
 
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { UserInterface } from '../models/user';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private afsAuth: AngularFireAuth, private afs: AngularFirestore) { }
+  constructor(private afsAuth: AngularFireAuth, private afs: AngularFirestore) {}
 
   registerUser(email: string, pass: string) {
     return new Promise((resolve, reject) => {
@@ -26,7 +27,7 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       this.afsAuth.auth.signInWithEmailAndPassword(email, pass)
         .then(userData => resolve(userData),
-        err => reject(err));
+          err => reject(err));
     });
   }
 
@@ -34,12 +35,24 @@ export class AuthService {
     return this.afsAuth.auth.signOut();
   }
 
+  public getUser(): Observable < UserInterface > {
+    return new Observable((observer) => {
+      this.afsAuth.authState.subscribe(userAuth => {
+        this.isUserAdmin(userAuth.uid).subscribe(user => {
+          observer.next(user);
+          observer.complete();
+
+        })
+      });
+    });
+  }
+
   isAuth() {
     return this.afsAuth.authState.pipe(map(auth => auth));
   }
 
   private updateUserData(user) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
+    const userRef: AngularFirestoreDocument < any > = this.afs.doc(`users/${user.uid}`);
     const data: UserInterface = {
       id: user.uid,
       email: user.email,
@@ -53,7 +66,7 @@ export class AuthService {
 
 
   isUserAdmin(userUid) {
-    return this.afs.doc<UserInterface>(`users/${userUid}`).valueChanges();
+    return this.afs.doc < UserInterface > (`users/${userUid}`).valueChanges();
   }
 
 

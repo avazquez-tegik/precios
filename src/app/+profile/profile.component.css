@@ -1,97 +1,13 @@
-input.hidden {
-  position: absolute;
-  left: -9px;
+#pic {
+  display: none;
 }
 
-#profile-image1 {
+.newbtn {
   cursor: pointer;
+}
 
-  width: 100px;
+#blah {
+  max-width: 100px;
   height: 100px;
-  border: 2px solid rgb(60, 141, 188);
-}
-
-.tital {
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.bot-border {
-  border-bottom: 1px #f8f8f8 solid;
-  margin: 5px 0 5px 0
-}
-
-
-.preview
-{
-    padding: 10px;
-    position: relative;
-}
-
-.preview i
-{
-    color: white;
-    font-size: 35px;
-    transform: translate(50px,130px);
-}
-
-.preview-img
-{
-    border-radius: 100%;
-    box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.7);
-}
-
-.browse-button
-{
-    width: 200px;
-    height: 200px;
-    border-radius: 100%;
-    position: absolute; /* Tweak the position property if the element seems to be unfit */
-    top: 10px;
-    left: 132px;
-    background: linear-gradient(180deg, transparent, black);
-    opacity: 0;
-    transition: 0.3s ease;
-}
-
-.browse-button:hover
-{
-    opacity: 1;
-}
-
-.browse-input
-{
-    width: 200px;
-    height: 200px;
-    border-radius: 100%;
-    transform: translate(-1px,-26px);
-    opacity: 0;
-}
-
-.form-group
-{
-    width:  250px;
-    margin: 10px auto;
-}
-
-.form-group input
-{
-    transition: 0.3s linear;
-}
-
-.form-group input:focus
-{
-    border: 1px solid crimson;
-    box-shadow: 0 0 0 0;
-}
-
-.Error
-{
-    color: crimson;
-    font-size: 13px;
-}
-
-.Back
-{
-    font-size: 25px;
+  margin-top: 20px;
 }

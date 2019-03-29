@@ -1,73 +1,61 @@
 <div class="container">
   <div class="row">
-
     <div class="col-md-7">
       <div class="panel panel-default">
-        <div class="panel-heading"><h4>User Profile</h4></div>
+        <div class="panel-heading">
+          <h4>User Profile</h4>
+        </div>
         <div class="panel-body">
           <div class="box box-info">
             <div class="box-body">
               <div class="col-sm-6">
-          <div class="preview text-center">
-                <img class="preview-img" src="http://simpleicon.com/wp-content/uploads/account.png" alt="Preview Image" width="200" height="200"/>
-                <div class="browse-button">
-                    <i class="fa fa-pencil-alt"></i>
-                    <input class="browse-input" type="file" required name="UploadedFile" id="UploadedFile"/>
+                <div class="row" *ngIf="user">
+                  <div>
+                    <label class=newbtn>
+                      <img id="blah" [src]="user.img_profile">
+                      <input id="pic" class='pis'  type="file" (change)="upload($event)">
+                    </label>
+                  </div>
                 </div>
-                <span class="Error"></span>
-            </div>
-
-                <!-- /input-group -->
               </div>
               <div class="col-sm-6">
                 <h4 style="color:rgb(60, 141, 188);">Prasad Shankar Huddedar</h4>
-                <span><p>Aspirant</p></span>
+                <span>
+                  <p>Aspirant</p>
+                </span>
               </div>
               <div class="clearfix"></div>
               <hr style="margin:5px 0 5px 0;" />
-
               <div class="col-sm-5 col-xs-6 tital ">First Name:</div>
               <div class="col-sm-7 col-xs-6 ">Prasad</div>
               <div class="clearfix"></div>
               <div class="bot-border"></div>
-
               <div class="col-sm-5 col-xs-6 tital ">Middle Name:</div>
               <div class="col-sm-7">Shankar</div>
               <div class="clearfix"></div>
               <div class="bot-border"></div>
-
               <div class="col-sm-5 col-xs-6 tital ">Last Name:</div>
               <div class="col-sm-7">Huddedar</div>
               <div class="clearfix"></div>
               <div class="bot-border"></div>
-
               <div class="col-sm-5 col-xs-6 tital ">Date Of Joining:</div>
               <div class="col-sm-7">15 Jun 2016</div>
-
               <div class="clearfix"></div>
               <div class="bot-border"></div>
-
               <div class="col-sm-5 col-xs-6 tital ">Date Of Birth:</div>
               <div class="col-sm-7">11 Jun 1998</div>
-
               <div class="clearfix"></div>
               <div class="bot-border"></div>
-
               <div class="col-sm-5 col-xs-6 tital ">Place Of Birth:</div>
               <div class="col-sm-7">Shirdi</div>
-
               <div class="clearfix"></div>
               <div class="bot-border"></div>
-
               <div class="col-sm-5 col-xs-6 tital ">Nationality:</div>
               <div class="col-sm-7">Indian</div>
-
               <div class="clearfix"></div>
               <div class="bot-border"></div>
-
               <div class="col-sm-5 col-xs-6 tital ">Relition:</div>
               <div class="col-sm-7">Hindu</div>
-
               <!-- /.box-body -->
             </div>
             <!-- /.box -->
@@ -76,5 +64,4 @@
       </div>
     </div>
   </div>
-
 </div>
