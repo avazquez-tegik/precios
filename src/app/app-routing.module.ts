@@ -9,7 +9,7 @@ const routes: Routes = [{
     data: {
       customLayout: true
     }
-  }, 
+  },
   {
     path: 'tabs',
     loadChildren: './+tabs/tabs.module#TabsModule',
