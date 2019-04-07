@@ -10,7 +10,9 @@ export const environment = {
     databaseURL: "https://compras-c9ff5.firebaseio.com",
     projectId: "compras-c9ff5",
     storageBucket: "compras-c9ff5.appspot.com",
-    messagingSenderId: "632743939644"
+    messagingSenderId: "632743939644",
+    production: false
+
   }
 };
 
