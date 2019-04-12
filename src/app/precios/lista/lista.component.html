@@ -1,82 +1,86 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-3">
-            <div class="list-group">
-                <a class="list-group-item waves-light" [ngClass]="{'active': filtro == 'cadena'}" (click)="filtro='cadena'">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="list-group">
+        <a class="list-group-item waves-light" [ngClass]="{'active': filtro == 'cadena'}" (click)="filtro='cadena'">
           Tiendas
         </a>
-                <a class="list-group-item list-group-item-action waves-light" [ngClass]="{'active': filtro == 'orden'}" (click)="filtro='orden'">Filtros</a>
-            </div>
-        </div>
-        <div class="col-md-9">
-            <div class="card" *ngIf="filtro=='cadena'">
-                <div class="card-body" [formGroup]="optionCadenasForm">
-                    Supermercados
-                    <ul>
-                        <li>
-                            <input type="checkbox" formControlName="soriana">Soriana
-                        </li>
-                        <li> <input type="checkbox" formControlName="heb">HEB
-                        </li>
-                    </ul>
-                    Departamentales
-                    <ul>
-                        <li>
-                            <input type="checkbox" formControlName="sears">Sears</li>
-                        <li><input type="checkbox" formControlName="sanborns">Sanbors</li>
-                        <li><input type="checkbox" formControlName="liverpool">Liverpool
-                        </li>
-                    </ul>
-                    Electronica
-                    <ul>
-                        <li>
-                            <input type="checkbox" formControlName="bestbuy">BestBuy
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        <a class="list-group-item list-group-item-action waves-light" [ngClass]="{'active': filtro == 'orden'}" (click)="filtro='orden'">Filtros</a>
+      </div>
     </div>
-    <!--<div class="card" style="height: 100vh" *ngIf="filtro=='orden'">
+    <div class="col-md-9">
+      <div class="card" *ngIf="filtro=='cadena'">
+        <div class="card-body" [formGroup]="optionCadenasForm">
+          Supermercados
+          <ul>
+            <li>
+              <input type="checkbox" formControlName="soriana">Soriana
+            </li>
+            <li> <input type="checkbox" formControlName="heb">HEB
+            </li>
+          </ul>
+          Departamentales
+          <ul>
+            <li>
+              <input type="checkbox" formControlName="sears">Sears</li>
+            <li><input type="checkbox" formControlName="sanborns">Sanbors</li>
+            <li><input type="checkbox" formControlName="liverpool">Liverpool
+            </li>
+          </ul>
+          Electronica
+          <ul>
+            <li>
+              <input type="checkbox" formControlName="bestbuy">BestBuy
+            </li>
+          </ul>
+          Farmacias
+          <ul>
+            <li>
+              <input type="checkbox" formControlName="farmacias_del_ahorro">Farmacias del ahorro
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--<div class="card" style="height: 100vh" *ngIf="filtro=='orden'">
   </div>!-->
 </div>
-
 <div class="row">
-    <div class="col-md-12">
-
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Articulo" aria-label="Articulo" aria-describedby="button-addon2" [(ngModel)]="text">
-            <div class="input-group-append">
-                <button color="default" outline="true" size="md" class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="find()">Buscar</button>
-            </div>
-        </div>
-        <div *ngIf="buscando" class="spinner-border" style="margin: auto" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
+  <div class="col-md-12">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Articulo" aria-label="Articulo" aria-describedby="button-addon2" [(ngModel)]="text">
+      <div class="input-group-append">
+        <button color="default" outline="true" size="md" class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="find()">Buscar</button>
+      </div>
     </div>
+    <!--<div *ngIf="buscando" class="spinner-border" style="margin: auto" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>!-->
+  </div>
 </div>
 <b></b>
 <div class="card-group">
-    <div class="col-md-3 col-md-2" *ngFor="let item of list">
-        <div class="card box">
-            <img class="card-img-top img" src="{{item.imagen}}">
-            <img *ngIf="item.cadena == 'HEB'" src="assets/img/heb.png" class="center">
-            <img *ngIf="item.cadena == 'Soriana'" src="assets/img/soriana.png" class="center">
-            <img *ngIf="item.cadena == 'liverpool'" src="assets/img/liverpool.png" class="center">
-            <img *ngIf="item.cadena == 'sears'" src="assets/img/sears.jpeg" class="center">
-            <img *ngIf="item.cadena == 'bestbuy'" src="assets/img/bestbuy.png" class="center">
-            <img *ngIf="item.cadena == 'sanborns'" src="assets/img/sanborns.png" class="center">
-            <div class="card-body">
-                <h5 class="card-title">{{ item.titulo }}</h5>
-            </div>
-            <h4 class="card-title" class="text-center">
-                <strong> {{item.precio | currency}}</strong>
-            </h4>
-            <a href="{{item.enlace_informacion}}" target="_blank">
-                <button type="button" class="btnx btn-primary btn-block">
+  <div class="col-md-3 col-md-2" *ngFor="let item of list">
+    <div class="card box">
+      <img class="card-img-top img" src="{{item.imagen}}">
+      <img *ngIf="item.cadena == 'HEB'" src="assets/img/heb.png" class="center">
+      <img *ngIf="item.cadena == 'Soriana'" src="assets/img/soriana.png" class="center">
+      <img *ngIf="item.cadena == 'liverpool'" src="assets/img/liverpool.png" class="center">
+      <img *ngIf="item.cadena == 'sears'" src="assets/img/sears.jpeg" class="center">
+      <img *ngIf="item.cadena == 'bestbuy'" src="assets/img/bestbuy.png" class="center">
+      <img *ngIf="item.cadena == 'sanborns'" src="assets/img/sanborns.png" class="center">
+      <img *ngIf="item.cadena == 'Farmacias Del Ahorro'" src="assets/img/farmacias_del_ahorro.jpg" class="center">
+      <div class="card-body">
+        <h5 class="card-title">{{ item.titulo }}</h5>
+      </div>
+      <h4 class="card-title" class="text-center">
+        <strong> {{item.precio | currency}}</strong>
+      </h4>
+      <a href="{{item.enlace_informacion}}" target="_blank">
+        <button type="button" class="btnx btn-primary btn-block">
           Comprar
         </button>
-            </a>
-        </div>
-
+      </a>
     </div>
+  </div>

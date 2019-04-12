@@ -12,9 +12,7 @@ export class ListaComponent implements OnInit {
 
   public text: string;
   public list: any[] = [];
-  public cadenas: string[] = [];
   public filtro: string = 'cadena';
-  public buscando: boolean = false;
   public tienda: string = '';
 
   public optionCadenasForm: FormGroup;
@@ -28,6 +26,7 @@ export class ListaComponent implements OnInit {
       sears: new FormControl(true),
       sanborns: new FormControl(true),
       bestbuy: new FormControl(true),
+      farmacias_del_ahorro: new FormControl(true)
 
     })
 
@@ -39,46 +38,27 @@ export class ListaComponent implements OnInit {
 
   public find() {
 
-    this.buscando = true;
-    this.cadenas = [];
-
+    this.list = [];
     for (let attr in this.optionCadenasForm.value) {
       if (this.optionCadenasForm.value[attr]) {
-        this.cadenas.push(attr);
-
+        this.getList(attr);
       }
     }
-
-    this.list = [];
-
-    this.getList(0);
 
 
   }
 
 
-  public getList(index: number) {
-    this.searcher.search(this.cadenas[index], this.text, 1).subscribe(data => {
-      console.log(data);
-
-      this.tienda = this.cadenas[index];
-
+  public getList(cadena: string) {
+    this.searcher.search(cadena, this.text, 1).subscribe(data => {
 
       if (data.results) {
-
         for (let r of data.results) {
           this.list.push(r);
         }
 
         this.list = this.order(this.list);
-        index = index + 1;
 
-        if (index < this.cadenas.length) {
-          this.getList(index++);
-        } else {
-          this.buscando = false;
-          return;
-        }
       }
 
 
@@ -88,7 +68,7 @@ export class ListaComponent implements OnInit {
 
   order(array: Array < any > ): Array < any > {
 
-    if (!array || array === undefined || array.length === 0) return null;
+    if (!array || array === undefined || array.length === 0) return [];
 
     array.sort((a: any, b: any) => {
       if (Number(a.precio) < Number(b.precio)) {

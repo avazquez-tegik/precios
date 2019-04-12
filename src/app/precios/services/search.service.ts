@@ -17,6 +17,7 @@ export class SearchService {
 
 
   public search(cadena: string, texto: string, page): Observable < any > {
+    console.log("CADENA", cadena);
 
     var headers = new Headers({
       'Content-Type': 'application/json'
