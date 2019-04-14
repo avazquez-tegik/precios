@@ -18,6 +18,8 @@
             </li>
             <li> <input type="checkbox" formControlName="heb">HEB
             </li>
+              <li> <input type="checkbox" formControlName="walmart">Wal Mart
+            </li>
           </ul>
           Departamentales
           <ul>
@@ -37,6 +39,12 @@
           <ul>
             <li>
               <input type="checkbox" formControlName="farmacias_del_ahorro">Farmacias del ahorro
+            </li>
+          </ul>
+          Hogar
+          <ul>
+            <li>
+              <input type="checkbox" formControlName="home_depot">HomeDepot
             </li>
           </ul>
         </div>
@@ -71,6 +79,8 @@
       <img *ngIf="item.cadena == 'bestbuy'" src="assets/img/bestbuy.png" class="center">
       <img *ngIf="item.cadena == 'sanborns'" src="assets/img/sanborns.png" class="center">
       <img *ngIf="item.cadena == 'Farmacias Del Ahorro'" src="assets/img/farmacias_del_ahorro.jpg" class="center">
+      <img *ngIf="item.cadena == 'WalMart'" src="assets/img/walmart.png" class="center">
+      <img *ngIf="item.cadena == 'HomeDepot'" src="assets/img/homedepot.png" class="center">
       <div class="card-body">
         <h5 class="card-title">{{ item.titulo }}</h5>
       </div>

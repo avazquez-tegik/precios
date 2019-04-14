@@ -26,7 +26,11 @@ export class ListaComponent implements OnInit {
       sears: new FormControl(true),
       sanborns: new FormControl(true),
       bestbuy: new FormControl(true),
-      farmacias_del_ahorro: new FormControl(true)
+      farmacias_del_ahorro: new FormControl(true),
+      walmart: new FormControl(true),
+      home_depot: new FormControl(true)
+
+
 
     })
 
