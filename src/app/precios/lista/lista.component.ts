@@ -28,11 +28,9 @@ export class ListaComponent implements OnInit {
       bestbuy: new FormControl(true),
       farmacias_del_ahorro: new FormControl(true),
       walmart: new FormControl(true),
-      home_depot: new FormControl(true)
-
-
-
-    })
+      home_depot: new FormControl(true),
+      pcel: new FormControl(true)
+    });
 
   }
 

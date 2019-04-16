@@ -34,6 +34,9 @@
             <li>
               <input type="checkbox" formControlName="bestbuy">BestBuy
             </li>
+            <li>
+              <input type="checkbox" formControlName="pcel">PCEL
+            </li>
           </ul>
           Farmacias
           <ul>
@@ -81,6 +84,7 @@
       <img *ngIf="item.cadena == 'Farmacias Del Ahorro'" src="assets/img/farmacias_del_ahorro.jpg" class="center">
       <img *ngIf="item.cadena == 'WalMart'" src="assets/img/walmart.png" class="center">
       <img *ngIf="item.cadena == 'HomeDepot'" src="assets/img/homedepot.png" class="center">
+      <img *ngIf="item.cadena == 'Pcel'" src="assets/img/pcel.png" class="center">
       <div class="card-body">
         <h5 class="card-title">{{ item.titulo }}</h5>
       </div>
