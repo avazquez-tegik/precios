@@ -12,6 +12,6 @@ export class UsuarioService {
 
   public update(user: UserInterface) {
     const userRef: AngularFirestoreDocument < any > = this.afs.doc('users/' + user.id);
-    userRef.set(user, { merge: true })
+    userRef.set(user, { merge: true });
   }
 }

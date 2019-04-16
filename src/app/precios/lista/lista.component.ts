@@ -12,8 +12,8 @@ export class ListaComponent implements OnInit {
 
   public text: string;
   public list: any[] = [];
-  public filtro: string = 'cadena';
-  public tienda: string = '';
+  public filtro = 'cadena';
+  public tienda = '';
 
   public optionCadenasForm: FormGroup;
 
@@ -41,7 +41,7 @@ export class ListaComponent implements OnInit {
   public find() {
 
     this.list = [];
-    for (let attr in this.optionCadenasForm.value) {
+    for (const attr in this.optionCadenasForm.value) {
       if (this.optionCadenasForm.value[attr]) {
         this.getList(attr);
       }
@@ -55,7 +55,7 @@ export class ListaComponent implements OnInit {
     this.searcher.search(cadena, this.text, 1).subscribe(data => {
 
       if (data.results) {
-        for (let r of data.results) {
+        for (const r of data.results) {
           this.list.push(r);
         }
 
@@ -70,7 +70,7 @@ export class ListaComponent implements OnInit {
 
   order(array: Array < any > ): Array < any > {
 
-    if (!array || array === undefined || array.length === 0) return [];
+    if (!array || array === undefined || array.length === 0) { return []; }
 
     array.sort((a: any, b: any) => {
       if (Number(a.precio) < Number(b.precio)) {

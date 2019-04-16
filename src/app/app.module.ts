@@ -11,7 +11,6 @@ import { LayoutModule } from 'angular-admin-lte';
 import { AppComponent } from './app.component';
 
 import { LoadingPageModule, MaterialBarModule } from 'angular-loading-page';
-import { ExcelExportModule } from '@progress/kendo-angular-excel-export';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AngularFireModule } from 'angularfire2';
@@ -28,12 +27,11 @@ import { AngularFirestore } from '@angular/fire/firestore';
     AppRoutingModule,
     CoreModule,
     LayoutModule.forRoot(adminLteConf),
-    LoadingPageModule, MaterialBarModule, ExcelExportModule, BrowserAnimationsModule,
+    LoadingPageModule, MaterialBarModule, BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
   declarations: [
     AppComponent
-    
 ],
 providers: [AngularFireAuth, AngularFirestore],
 bootstrap: [AppComponent]

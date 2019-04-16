@@ -3,7 +3,6 @@ import { AuthService } from '../core/services/auth.service';
 import { Router } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable } from 'rxjs/internal/Observable';
-import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -28,14 +27,14 @@ export class RegisterComponent implements OnInit {
       .then((res) => {
         this.authService.isAuth().subscribe(user => {
           if (user) {
-              this.router.navigate(['/precios/lista']);
+              this.router.navigate(['/home']);
           }
         });
       }).catch(err => console.log('err', err.message));
   }
 
   onLoginRedirect(): void {
-    this.router.navigate(['/precios/lista']);
+    this.router.navigate(['/home']);
   }
 
 }
