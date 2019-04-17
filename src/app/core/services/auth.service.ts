@@ -5,13 +5,18 @@ import { map } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { UserInterface } from '../models/user';
 import { Observable } from 'rxjs';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private afsAuth: AngularFireAuth, private afs: AngularFirestore) {}
+  constructor(private afsAuth: AngularFireAuth,
+    private afs: AngularFirestore,
+    private router: Router) {
+
+  }
 
   registerUser(email: string, pass: string) {
     return new Promise((resolve, reject) => {
@@ -38,11 +43,15 @@ export class AuthService {
   public getUser(): Observable < UserInterface > {
     return new Observable((observer) => {
       this.afsAuth.authState.subscribe(userAuth => {
-        this.isUserAdmin(userAuth.uid).subscribe(user => {
-          observer.next(user);
-          observer.complete();
+        if (!userAuth) {
+         this.router.navigate([''])
+        } else {
+          this.isUserAdmin(userAuth.uid).subscribe(user => {
+            observer.next(user);
+            observer.complete();
 
-        })
+          })
+        }
       });
     });
   }

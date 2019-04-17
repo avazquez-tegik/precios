@@ -84,11 +84,6 @@ const routes: Routes = [{
       title: 'Precios',
       canActivate: [AuthGuard]
     }
-  },
-  {
-    path: '**',
-    redirectTo: 'precios/lista',
-    pathMatch: 'full',
   }
 ];
 
