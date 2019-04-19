@@ -13,12 +13,9 @@
         <div class="card-body" [formGroup]="optionCadenasForm">
           Supermercados
           <ul>
-            <li>
-              <input type="checkbox" formControlName="soriana">Soriana
-            </li>
             <li> <input type="checkbox" formControlName="heb">HEB
             </li>
-            <li> <input type="checkbox" formControlName="walmart">Wal Mart
+            <li> <input type="checkbox" formControlName="super_walmart">Wal Mart
             </li>
           </ul>
           Departamentales
@@ -29,6 +26,11 @@
             <li><input type="checkbox" formControlName="liverpool">Liverpool
             </li>
             <li><input type="checkbox" formControlName="costco">Costco
+            </li>
+            <li>
+              <input type="checkbox" formControlName="soriana">Soriana
+            </li>
+            <li> <input type="checkbox" formControlName="walmart">Wal Mart
             </li>
           </ul>
           Electronica
@@ -84,7 +86,7 @@
       <img *ngIf="item.cadena == 'bestbuy'" src="assets/img/bestbuy.png" class="center">
       <img *ngIf="item.cadena == 'sanborns'" src="assets/img/sanborns.png" class="center">
       <img *ngIf="item.cadena == 'Farmacias Del Ahorro'" src="assets/img/farmacias_del_ahorro.jpg" class="center">
-      <img *ngIf="item.cadena == 'WalMart'" src="assets/img/walmart.png" class="center">
+      <img *ngIf="item.cadena == 'WalMart' || item.cadena == 'SuperWalMart'" src="assets/img/walmart.png" class="center">
       <img *ngIf="item.cadena == 'HomeDepot'" src="assets/img/homedepot.png" class="center">
       <img *ngIf="item.cadena == 'Pcel'" src="assets/img/pcel.png" class="center">
       <img *ngIf="item.cadena == 'Costco'" src="assets/img/costco.png" class="center">
