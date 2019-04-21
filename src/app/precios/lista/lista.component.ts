@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SearchService } from '../services/search.service';
 import { FormGroup, FormControl } from '@angular/forms';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-lista',
@@ -10,28 +11,32 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class ListaComponent implements OnInit {
 
+  @ViewChild( CdkVirtualScrollViewport ) viewport: CdkVirtualScrollViewport;
+
+
   public text: string;
   public list: any[] = [];
   public filtro = 'cadena';
   public tienda = '';
 
   public optionCadenasForm: FormGroup;
+  personas: any[];
 
 
   constructor(private searcher: SearchService) {
     this.optionCadenasForm = new FormGroup({
       soriana: new FormControl(true),
-      heb: new FormControl(true),
-      liverpool: new FormControl(true),
-      sears: new FormControl(true),
-      sanborns: new FormControl(true),
-      bestbuy: new FormControl(true),
-      farmacias_del_ahorro: new FormControl(true),
-      walmart: new FormControl(true),
-      home_depot: new FormControl(true),
-      pcel: new FormControl(true),
-      costco: new FormControl(true),
-      super_walmart: new FormControl(true)
+      heb: new FormControl(false),
+      liverpool: new FormControl(false),
+      sears: new FormControl(false),
+      sanborns: new FormControl(false),
+      bestbuy: new FormControl(false),
+      farmacias_del_ahorro: new FormControl(false),
+      walmart: new FormControl(false),
+      home_depot: new FormControl(false),
+      pcel: new FormControl(false),
+      costco: new FormControl(false),
+      super_walmart: new FormControl(false)
     });
 
   }
@@ -49,7 +54,6 @@ export class ListaComponent implements OnInit {
       }
     }
 
-
   }
 
 
@@ -62,6 +66,7 @@ export class ListaComponent implements OnInit {
         }
 
         this.list = this.order(this.list);
+        this.personas =  this.order(this.list);
 
       }
 

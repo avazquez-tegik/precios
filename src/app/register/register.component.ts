@@ -16,6 +16,7 @@ export class RegisterComponent implements OnInit {
 
   public email = '';
   public password = '';
+  public error = '';
 
   uploadPercent: Observable<number>;
   urlImage: Observable<string>;
@@ -30,7 +31,8 @@ export class RegisterComponent implements OnInit {
               this.router.navigate(['/precios/lista']);
           }
         });
-      }).catch(err => console.log('err', err.message));
+      }).catch(err => this.error = err.message
+      );
   }
 
   onLoginRedirect(): void {

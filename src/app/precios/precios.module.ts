@@ -6,6 +6,7 @@ import { ListaComponent } from './lista/lista.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [ListaComponent],
@@ -14,7 +15,8 @@ import { HttpModule } from '@angular/http';
     PreciosRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    ScrollingModule
   ]
 })
 export class PreciosModule { }
