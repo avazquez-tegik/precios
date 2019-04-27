@@ -7,6 +7,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { AccordionModule as MkAccordionModule, BoxModule } from 'angular-admin-lte';
 
 @NgModule({
   declarations: [ListaComponent],
@@ -16,7 +17,9 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     ReactiveFormsModule,
     FormsModule,
     HttpModule,
-    ScrollingModule
+    ScrollingModule,
+    MkAccordionModule,
+    BoxModule
   ]
 })
 export class PreciosModule { }

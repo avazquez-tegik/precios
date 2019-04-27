@@ -3,6 +3,7 @@ import { SearchService } from '../services/search.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 
+
 @Component({
   selector: 'app-lista',
   templateUrl: './lista.component.html',
