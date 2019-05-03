@@ -12,7 +12,7 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 })
 export class ListaComponent implements OnInit {
 
-  @ViewChild( CdkVirtualScrollViewport ) viewport: CdkVirtualScrollViewport;
+  @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
 
 
   public text: string;
@@ -40,6 +40,8 @@ export class ListaComponent implements OnInit {
       super_walmart: new FormControl(false),
 
       superama: new FormControl(false),
+      bodega_aurrera: new FormControl(false),
+
       delsol: new FormControl(false),
       officedepot: new FormControl(false),
       officemax: new FormControl(false)
@@ -72,7 +74,7 @@ export class ListaComponent implements OnInit {
         }
 
         this.list = this.order(this.list);
-        this.personas =  this.order(this.list);
+        this.personas = this.order(this.list);
 
       }
 

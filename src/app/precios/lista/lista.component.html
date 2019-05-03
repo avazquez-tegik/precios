@@ -21,7 +21,7 @@
     <div class="row">
       <div class="col-md-5 col-xs-12">
         <mk-box [isSolid]="true" boxColor="#fff" [isCollapsable]="true" [isRemovable]="false" header="Tiendas">
-          <mk-accordion-group [isMultiple]="false" [activeIndex]="activeIndex" [formGroup]="optionCadenasForm">
+          <mk-accordion-group [isMultiple]="false" [formGroup]="optionCadenasForm">
             <mk-accordion header="Supermercados">
               <label class="form-check">
                 <input class="form-check-input" type="checkbox" formControlName="heb" />
@@ -33,6 +33,18 @@
                 <input class="form-check-input" type="checkbox" formControlName="super_walmart" />
                 <span class="form-check-label">
                   WalMart
+                </span>
+              </label>
+              <label class="form-check">
+                <input class="form-check-input" type="checkbox" formControlName="bodega_aurrera" />
+                <span class="form-check-label">
+                  Bodega Aurrera
+                </span>
+              </label>
+              <label class="form-check">
+                <input class="form-check-input" type="checkbox" formControlName="superama" />
+                <span class="form-check-label">
+                  Superama
                 </span>
               </label>
             </mk-accordion>
@@ -65,12 +77,6 @@
                 <input class="form-check-input" type="checkbox" formControlName="walmart" />
                 <span class="form-check-label">
                   Walmart
-                </span>
-              </label>
-              <label class="form-check">
-                <input class="form-check-input" type="checkbox" formControlName="superama" />
-                <span class="form-check-label">
-                  Superama
                 </span>
               </label>
               <label class="form-check">
@@ -112,13 +118,13 @@
             </mk-accordion>
             <mk-accordion header="Oficina">
               <label class="form-check">
-                <input class="form-check-input" type="checkbox" formControlName="officedepot:" />
+                <input class="form-check-input" type="checkbox" formControlName="officedepot" />
                 <span class="form-check-label">
                   OfficeDepot
                 </span>
               </label>
               <label class="form-check">
-                <input class="form-check-input" type="checkbox" formControlName="officemax:" />
+                <input class="form-check-input" type="checkbox" formControlName="officemax" />
                 <span class="form-check-label">
                   OfficeMax
                 </span>
@@ -149,8 +155,9 @@
         <img *ngIf="item.cadena == 'Costco'" src="assets/img/costco.png" class="center" />
         <img *ngIf="item.cadena == 'Superama'" src="assets/img/superama.png" class="center" />
         <img *ngIf="item.cadena == 'DelSol'" src="assets/img/del_sol.png" class="center" />
-        <img *ngIf="item.cadena == 'OfficeDepot'" src="assets/img/office_depot.png" class="center" />
-        <img *ngIf="item.cadena == 'OfficeMax'" src="assets/img/office_max.jpg" class="center" />
+        <img *ngIf="item.cadena == 'officedepot'" src="assets/img/office_depot.png" class="center" />
+        <img *ngIf="item.cadena == 'Office Max'" src="assets/img/officemax.jpg" class="center" />
+        <img *ngIf="item.cadena == 'BodegaAurrera'" src="assets/img/bodega_aurrera.jpeg" class="center" />
         <div class="card-body">
           <h5 class="card-title">{{ item.titulo }}</h5>
         </div>
