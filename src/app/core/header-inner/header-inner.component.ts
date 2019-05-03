@@ -22,7 +22,6 @@ export class HeaderInnerComponent implements OnInit {
   ngOnInit() {
     this.authService.getUser().subscribe(user => {
       this.user = user;
-      
     });
   }
 

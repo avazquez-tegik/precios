@@ -1,262 +1,333 @@
 <div class="container-fluid">
-
-
-<div class="row">
-  <div class="col-md-12">
-    <div class="input-group mb-8">
-      <input
-        type="text"
-        class="form-control mr-sm-2"
-        placeholder="Articulo"
-        [(ngModel)]="text"
-      />
-      <div class="input-group-append">
-        <button class="btn btn-outline-primary" (click)="find()">
-          Buscar ...
-        </button>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="input-group mb-5">
+        <input
+          type="text"
+          class="form-control mr-sm-2"
+          placeholder="Articulo"
+          [(ngModel)]="text"
+        />
+        <div class="input-group-append">
+          <button class="btn btn-outline-primary" (click)="find()">
+            Buscar ...
+          </button>
+        </div>
       </div>
-    </div>
 
-    <!--<div *ngIf="buscando" class="spinner-border" style="margin: auto" role="status">
+      <!--<div *ngIf="buscando" class="spinner-border" style="margin: auto" role="status">
       <span class="sr-only">Loading...</span>
     </div>!-->
+    </div>
   </div>
-</div>
 
-<div class="container">
-  <br />
-  <p class="text-center">Filtros</p>
-  <hr />
+  <div class="container col-md-12">
+    <br />
+    <p class="text-center">Filtros</p>
+    <hr />
 
-  <div class="row">
-    <div class="col-md-4 col-xs-12">
-      <mk-box
-        [isSolid]="true"
-        boxColor="#fff"
-        [isCollapsable]="true"
-        [isRemovable]="false"
-        header="Tiendas"
-      >
-        <mk-accordion-group [isMultiple]="false" [activeIndex]="activeIndex" [formGroup]="optionCadenasForm">
-          <mk-accordion header="Supermercados">
+    <div class="row">
+      <div class="col-md-5 col-xs-12">
+        <mk-box
+          [isSolid]="true"
+          boxColor="#fff"
+          [isCollapsable]="true"
+          [isRemovable]="false"
+          header="Tiendas"
+        >
+          <mk-accordion-group
+            [isMultiple]="false"
+            [activeIndex]="activeIndex"
+            [formGroup]="optionCadenasForm"
+          >
+            <mk-accordion header="Supermercados">
+              <label class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  formControlName="heb"
+                />
+                <span class="form-check-label">
+                  HEB
+                </span>
+              </label>
 
-            <label class="form-check">
-              <input class="form-check-input" type="checkbox" formControlName="heb" />
-              <span class="form-check-label">
-                HEB
-              </span>
-            </label>
-
-            <label class="form-check">
-                <input class="form-check-input" type="checkbox" formControlName="super_walmart" />
+              <label class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  formControlName="super_walmart"
+                />
                 <span class="form-check-label">
                   WalMart
                 </span>
-            </label>
+              </label>
+            </mk-accordion>
+            <mk-accordion header="Departamentales">
+              <label class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  formControlName="liverpool"
+                />
+                <span class="form-check-label">
+                  Liverpool
+                </span>
+              </label>
 
+              <label class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  formControlName="sanborns"
+                />
+                <span class="form-check-label">
+                  Sanbors
+                </span>
+              </label>
 
+              <label class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  formControlName="costco"
+                />
+                <span class="form-check-label">
+                  Costco
+                </span>
+              </label>
 
-          </mk-accordion>
-          <mk-accordion header="Departamentales">
-            <label class="form-check">
-              <input class="form-check-input" type="checkbox" formControlName="liverpool"  />
-              <span class="form-check-label">
-                Liverpool
-              </span>
-            </label>
-
-            <label class="form-check">
-              <input class="form-check-input" type="checkbox" formControlName="sanborns" />
-              <span class="form-check-label">
-                Sanbors
-              </span>
-            </label>
-
-            <label class="form-check">
-              <input class="form-check-input" type="checkbox"formControlName="costco" />
-              <span class="form-check-label">
-                Costco
-              </span>
-            </label>
-
-            <label class="form-check">
-                <input class="form-check-input" type="checkbox"formControlName="soriana" />
+              <label class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  formControlName="soriana"
+                />
                 <span class="form-check-label">
                   Soriana
                 </span>
               </label>
 
               <label class="form-check">
-                  <input class="form-check-input" type="checkbox"formControlName="walmart" />
-                  <span class="form-check-label">
-                    Walmart
-                  </span>
-                </label>
-
-          </mk-accordion>
-          <mk-accordion header="Electronica">
-            <label class="form-check">
-              <input class="form-check-input" type="checkbox" formControlName="bestbuy" />
-              <span class="form-check-label">
-                BestBuy
-              </span>
-            </label>
-            <label class="form-check">
-              <input class="form-check-input" type="checkbox" formControlName="pcel" />
-              <span class="form-check-label">
-                PCEL
-              </span>
-            </label>
-          </mk-accordion>
-          <mk-accordion header="Farmacias">
-
-            <label class="form-check">
-              <input class="form-check-input" type="checkbox"formControlName="farmacias_del_ahorro" />
-              <span class="form-check-label">
-                Farmacias del ahorro
-              </span>
-            </label>
-
-          </mk-accordion>
-          <mk-accordion header="Hogar">
-              <label class="form-check">
-                <input class="form-check-input" type="checkbox"formControlName="home_depot" />
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  formControlName="walmart"
+                />
                 <span class="form-check-label">
-                HomeDepot
+                  Walmart
                 </span>
               </label>
 
+              <label class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  formControlName="superama"
+                />
+                <span class="form-check-label">
+                  Superama
+                </span>
+              </label>
+              <label class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  formControlName="delsol"
+                />
+                <span class="form-check-label">
+                  DelSol
+                </span>
+              </label>
             </mk-accordion>
-        </mk-accordion-group>
-      </mk-box>
-    </div>
-
-    <aside class="col-sm-4">
-      <div class="card">
-        <article class="card-group-item">
-          <header class="card-header">
-            <h6 class="title">Rango de precio</h6>
-          </header>
-          <div class="filter-content">
-            <div class="card-body">
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label>Min</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="inputEmail4"
-                    placeholder="$0"
-                  />
-                </div>
-                <div class="form-group col-md-6 text-right">
-                  <label>Max</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    placeholder="$1,0000"
-                  />
-                </div>
-              </div>
-            </div>
-            <!-- card-body.// -->
-          </div>
-        </article>
-        <!-- card-group-item.// -->
+            <mk-accordion header="Electronica">
+              <label class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  formControlName="bestbuy"
+                />
+                <span class="form-check-label">
+                  BestBuy
+                </span>
+              </label>
+              <label class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  formControlName="pcel"
+                />
+                <span class="form-check-label">
+                  PCEL
+                </span>
+              </label>
+            </mk-accordion>
+            <mk-accordion header="Farmacias">
+              <label class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  formControlName="farmacias_del_ahorro"
+                />
+                <span class="form-check-label">
+                  Farmacias del ahorro
+                </span>
+              </label>
+            </mk-accordion>
+            <mk-accordion header="Hogar">
+              <label class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  formControlName="home_depot"
+                />
+                <span class="form-check-label">
+                  HomeDepot
+                </span>
+              </label>
+            </mk-accordion>
+            <mk-accordion header="Oficina">
+              <label class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  formControlName="officedepot:"
+                />
+                <span class="form-check-label">
+                  OfficeDepot
+                </span>
+              </label>
+              <label class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  formControlName="officemax:"
+                />
+                <span class="form-check-label">
+                OfficeMax
+                </span>
+              </label>
+            </mk-accordion>
+          </mk-accordion-group>
+        </mk-box>
       </div>
-      <!-- card.// -->
-    </aside>
-    <!-- col.// -->
+    </div>
+    <!-- row.// -->
   </div>
-  <!-- row.// -->
-</div>
-<!--container end.//-->
+  <!--container end.//-->
 
-<p></p>
+  <p></p>
 
-<div class="card-group">
+  <div class="card-group">
+    <div class="col-md-3 col-md-2" *ngFor="let item of list">
+      <div class="card box">
+        <img class="card-img-top img" src="{{ item.imagen }}" />
 
-  <div class="col-md-3 col-md-2" *ngFor="let item of list">
-    <div class="card box">
-      <img class="card-img-top img" src="{{ item.imagen }}" />
+        <img
+          *ngIf="item.cadena == 'HEB'"
+          src="assets/img/heb.png"
+          class="center"
+        />
+        <img
+          *ngIf="item.cadena == 'Soriana'"
+          src="assets/img/soriana.png"
+          class="center"
+        />
+        <img
+          *ngIf="item.cadena == 'liverpool'"
+          src="assets/img/liverpool.png"
+          class="center"
+        />
+        <img
+          *ngIf="item.cadena == 'sears'"
+          src="assets/img/sears.jpeg"
+          class="center"
+        />
+        <img
+          *ngIf="item.cadena == 'bestbuy'"
+          src="assets/img/bestbuy.png"
+          class="center"
+        />
+        <img
+          *ngIf="item.cadena == 'sanborns'"
+          src="assets/img/sanborns.png"
+          class="center"
+        />
+        <img
+          *ngIf="item.cadena == 'Farmacias Del Ahorro'"
+          src="assets/img/farmacias_del_ahorro.jpg"
+          class="center"
+        />
+        <img
+          *ngIf="item.cadena == 'WalMart' || item.cadena == 'SuperWalMart'"
+          src="assets/img/walmart.png"
+          class="center"
+        />
+        <img
+          *ngIf="item.cadena == 'HomeDepot'"
+          src="assets/img/homedepot.png"
+          class="center"
+        />
+        <img
+          *ngIf="item.cadena == 'Pcel'"
+          src="assets/img/pcel.png"
+          class="center"
+        />
+        <img
+          *ngIf="item.cadena == 'Costco'"
+          src="assets/img/costco.png"
+          class="center"
+        />
+        <img
+          *ngIf="item.cadena == 'Superama'"
+          src="assets/img/superama.png"
+          class="center"
+        />
+        <img
+        *ngIf="item.cadena == 'DelSol'"
+        src="assets/img/del_sol.png"
+        class="center"
+      />
+      <img
+      *ngIf="item.cadena == 'OfficeDepot'"
+      src="assets/img/office_depot.png"
+      class="center"
+    />
 
-      <img
-        *ngIf="item.cadena == 'HEB'"
-        src="assets/img/heb.png"
-        class="center"
-      />
-      <img
-        *ngIf="item.cadena == 'Soriana'"
-        src="assets/img/soriana.png"
-        class="center"
-      />
-      <img
-        *ngIf="item.cadena == 'liverpool'"
-        src="assets/img/liverpool.png"
-        class="center"
-      />
-      <img
-        *ngIf="item.cadena == 'sears'"
-        src="assets/img/sears.jpeg"
-        class="center"
-      />
-      <img
-        *ngIf="item.cadena == 'bestbuy'"
-        src="assets/img/bestbuy.png"
-        class="center"
-      />
-      <img
-        *ngIf="item.cadena == 'sanborns'"
-        src="assets/img/sanborns.png"
-        class="center"
-      />
-      <img
-        *ngIf="item.cadena == 'Farmacias Del Ahorro'"
-        src="assets/img/farmacias_del_ahorro.jpg"
-        class="center"
-      />
-      <img
-        *ngIf="item.cadena == 'WalMart' || item.cadena == 'SuperWalMart'"
-        src="assets/img/walmart.png"
-        class="center"
-      />
-      <img
-        *ngIf="item.cadena == 'HomeDepot'"
-        src="assets/img/homedepot.png"
-        class="center"
-      />
-      <img
-        *ngIf="item.cadena == 'Pcel'"
-        src="assets/img/pcel.png"
-        class="center"
-      />
-      <img
-        *ngIf="item.cadena == 'Costco'"
-        src="assets/img/costco.png"
-        class="center"
-      />
-      <div class="card-body">
-        <h5 class="card-title">{{ item.titulo }}</h5>
+    <img
+    *ngIf="item.cadena == 'OfficeMax'"
+    src="assets/img/office_max.jpg"
+    class="center"
+  />
+
+
+        <div class="card-body">
+          <h5 class="card-title">{{ item.titulo }}</h5>
+        </div>
+        <h4 class="card-title" class="text-center">
+          <strong> {{ item.precio | currency }}</strong>
+        </h4>
+        <a href="{{ item.enlace_informacion }}" target="_blank">
+          <button type="button" class="btnx btn-primary btn-block">
+            Comprar
+          </button>
+        </a>
       </div>
-      <h4 class="card-title" class="text-center">
-        <strong> {{ item.precio | currency }}</strong>
-      </h4>
-      <a href="{{ item.enlace_informacion }}" target="_blank">
-        <button type="button" class="btnx btn-primary btn-block">
-          Comprar
-        </button>
-      </a>
     </div>
   </div>
-</div>
 
-<cdk-virtual-scroll-viewport itemSize="40" class="list-container list-group">
-  <div
-    class="list-group-item"
-    itemSize="40"
-    *cdkVirtualFor="let persona of personas; let i = index; let conteo = count"
-  >
-    Articulo {{ i + 1 }} {{ persona.titulo }}
-    <strong> {{ persona.precio | currency }}</strong>
-  </div>
-</cdk-virtual-scroll-viewport>
+  <cdk-virtual-scroll-viewport itemSize="40" class="list-container list-group">
+    <div
+      class="list-group-item"
+      itemSize="40"
+      *cdkVirtualFor="
+        let persona of personas;
+        let i = index;
+        let conteo = count
+      "
+    >
+      Articulo {{ i + 1 }} {{ persona.titulo }}
+      <strong> {{ persona.precio | currency }}</strong>
+    </div>
+  </cdk-virtual-scroll-viewport>
+</div>
