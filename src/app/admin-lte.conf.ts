@@ -1,5 +1,5 @@
 export const adminLteConf = {
-  skin: 'blue',
+  skin: 'black',
   isSidebarLeftCollapsed: true,
   // isSidebarLeftExpandOnOver: true,
   // isSidebarLeftMouseOver: false,

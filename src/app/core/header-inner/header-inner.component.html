@@ -4,31 +4,18 @@
     <li mk-dropdown type="list" [isWrapper]="false" class="user user-menu">
       <mk-dropdown-toggle>
         <a #toggleElement>
-          <img   [src]="user.img_profile" class="user-image" alt="User Image">
+          <img [src]="user.img_profile" class="user-image" alt="User Image">
           <span class="hidden-xs"></span>
         </a>
       </mk-dropdown-toggle>
-      <mk-dropdown-menu> 
+      <mk-dropdown-menu>
     <li class="user-header">
       <img *ngIf="user.img_profile" [src]="user.img_profile" class="img-circle" alt="User Image">
-      
       <p *ngIf="user">
         {{user.email}}
       </p>
     </li>
-    <li class="user-body">
-      <!--<div class="row">
-            <div class="col-xs-4 text-center">
-              <a href="#">OP-1</a>
-            </div>
-            <div class="col-xs-4 text-center">
-              <a href="#">OP-2</a>
-            </div>
-            <div class="col-xs-4 text-center">
-              <a href="#">OPT-3</a>
-            </div>
-          </div>!-->
-    </li>
+
     <li class="user-footer">
       <div class="pull-left">
         <a href="/profile" class="btn btn-default btn-flat">Perfil</a>
