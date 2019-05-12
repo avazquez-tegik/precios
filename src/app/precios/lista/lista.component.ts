@@ -22,7 +22,9 @@ export class ListaComponent implements OnInit {
 
   public optionCadenasForm: FormGroup;
   personas: any[];
-
+  filterPost = '';
+  filterPriceMin = 0;
+  filterPriceMax = '';
 
   constructor(private searcher: SearchService) {
     this.optionCadenasForm = new FormGroup({
@@ -98,5 +100,9 @@ export class ListaComponent implements OnInit {
     });
     return array;
   }
+
+
+
+
 
 }

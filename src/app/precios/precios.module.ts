@@ -8,9 +8,11 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { AccordionModule as MkAccordionModule, BoxModule } from 'angular-admin-lte';
+import { FiltrosPipe } from './pipes/filtros.pipe';
+
 
 @NgModule({
-  declarations: [ListaComponent],
+  declarations: [ListaComponent, FiltrosPipe],
   imports: [
     CommonModule,
     PreciosRoutingModule,

@@ -9,9 +9,7 @@
           </button>
         </div>
       </div>
-      <!--<div *ngIf="buscando" class="spinner-border" style="margin: auto" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>!-->
+
     </div>
   </div>
   <div class="container col-md-12">
@@ -20,7 +18,7 @@
     <hr />
     <div class="row">
       <div class="col-md-5 col-xs-12">
-        <mk-box [isSolid]="true" boxColor="#fff" [isCollapsable]="true" [isRemovable]="false" header="Tiendas">
+        <mk-box [isSolid]="true" boxColor="#fff" [isCollapsable]="true" [isRemovable]="false" header="Tiendas" [isCollapsed]="true">
           <mk-accordion-group [isMultiple]="false" [formGroup]="optionCadenasForm">
             <mk-accordion header="Supermercados">
               <label class="form-check">
@@ -134,12 +132,46 @@
         </mk-box>
       </div>
     </div>
+
+    <div class="row">
+      <div class="col-md-5">
+        <div class="form-group">
+          <input type="text" class="form-control" name="filterPost" placeholder="Contiene..." [(ngModel)]="filterPost">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-5">
+    <div class="card">
+      <article class="card-group-item ">
+        <header class="card-header">
+          <h6 class="title">Rango Precios </h6>
+        </header>
+        <div class="filter-content">
+          <div class="card-body">
+          <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Min</label>
+            <input type="number" class="form-control" name="filterPriceMin" placeholder="$0"  [(ngModel)]="filterPriceMin">
+          </div>
+          <div class="form-group col-md-6  text-right">
+              <label>Max</label>
+              <input type="number" class="form-control" name="filterPriceMin"   [(ngModel)]="filterPriceMax">
+            </div>
+          </div>
+          </div> <!-- card-body.// -->
+        </div>
+      </article> <!-- card-group-item.// -->
+    </div> <!-- card.// -->
+  </div>
+</div>
     <!-- row.// -->
   </div>
   <!--container end.//-->
   <p></p>
   <div class="card-group">
-    <div class="col-md-3 col-md-2" *ngFor="let item of list">
+    <div class="col-md-3 col-md-2" *ngFor="let item of list | filtros: filterPost:filterPriceMin:filterPriceMax">
       <div class="card box">
         <img class="card-img-top img" src="{{ item.imagen }}" />
         <img *ngIf="item.cadena == 'HEB'" src="assets/img/heb.png" class="center" />

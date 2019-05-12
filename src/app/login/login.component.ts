@@ -13,7 +13,8 @@ export class LoginComponent implements OnInit {
   constructor(public afAuth: AngularFireAuth, private router: Router, private authService: AuthService) { }
   public email = '';
   public password = '';
-  public isError= false;
+  public isError = false;
+  public error = '';
   ngOnInit() {
   }
 
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit {
     this.authService.loginEmailUser(this.email, this.password)
       .then((res) => {
         this.onLoginRedirect();
-      }).catch(err => console.log('err', err.message));
+      }).catch(err => this.error = err.message
+        );
   }
 
 
