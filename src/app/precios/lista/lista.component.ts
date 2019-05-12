@@ -24,7 +24,7 @@ export class ListaComponent implements OnInit {
   personas: any[];
   filterPost = '';
   filterPriceMin = 0;
-  filterPriceMax = '';
+  filterPriceMax = 500000;
 
   constructor(private searcher: SearchService) {
     this.optionCadenasForm = new FormGroup({

@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FiltrosPipe implements PipeTransform {
 
   transform(value: any, filterPost: any, filterPriceMin: any, filterPriceMax: any): any {
-    if (filterPost === '' && filterPriceMin === 0 && filterPriceMax === '') { return value; }
+    if (filterPost === '' && filterPriceMin === 0 && filterPriceMax === 500000) { return value; }
     const resultPosts = [];
     for (const post of value) {
       if (
