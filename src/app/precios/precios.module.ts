@@ -9,6 +9,7 @@ import { HttpModule } from '@angular/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { AccordionModule as MkAccordionModule, BoxModule } from 'angular-admin-lte';
 import { FiltrosPipe } from './pipes/filtros.pipe';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { FiltrosPipe } from './pipes/filtros.pipe';
     HttpModule,
     ScrollingModule,
     MkAccordionModule,
-    BoxModule
+    BoxModule,
+    NgxPaginationModule
   ]
 })
 export class PreciosModule { }

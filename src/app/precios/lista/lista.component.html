@@ -151,11 +151,11 @@
         <div class="filter-content">
           <div class="card-body">
           <div class="form-row">
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-6 text-center">
             <label>Min</label>
             <input type="number" class="form-control" name="filterPriceMin" placeholder="$0"  [(ngModel)]="filterPriceMin">
           </div>
-          <div class="form-group col-md-6  text-right">
+          <div class="form-group col-md-6  text-center">
               <label>Max</label>
               <input type="number" class="form-control" name="filterPriceMin"   [(ngModel)]="filterPriceMax">
             </div>
@@ -170,8 +170,9 @@
   </div>
   <!--container end.//-->
   <p></p>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
   <div class="card-group">
-    <div class="col-md-3 col-md-2" *ngFor="let item of list | filtros: filterPost:filterPriceMin:filterPriceMax">
+    <div class="col-md-3 col-md-2" *ngFor="let item of list | filtros: filterPost:filterPriceMin:filterPriceMax | paginate: { itemsPerPage: 20, currentPage: p }">
       <div class="card box">
         <img class="card-img-top img" src="{{ item.imagen }}" />
         <img *ngIf="item.cadena == 'HEB'" src="assets/img/heb.png" class="center" />
@@ -204,8 +205,11 @@
       </div>
     </div>
   </div>
-  <cdk-virtual-scroll-viewport itemSize="40" class="list-container list-group">
-    <div class="list-group-item" itemSize="40" *cdkVirtualFor="
+<p></p>
+<pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+  <cdk-virtual-scroll-viewport itemSize="20" class="list-container list-group">
+    <div class="list-group-item" itemSize="20" *cdkVirtualFor="
         let persona of personas;
         let i = index;
         let conteo = count
@@ -215,3 +219,4 @@
     </div>
   </cdk-virtual-scroll-viewport>
 </div>
+
