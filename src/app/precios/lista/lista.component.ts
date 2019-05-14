@@ -19,6 +19,7 @@ export class ListaComponent implements OnInit {
   public list: any[] = [];
   public filtro = 'cadena';
   public tienda = '';
+  public p;
 
   public optionCadenasForm: FormGroup;
   personas: any[];
