@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { SearchService } from '../services/search.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -26,7 +27,7 @@ export class ListaComponent implements OnInit {
   filterPriceMin = 0;
   filterPriceMax = 500000;
 
-  constructor(private searcher: SearchService) {
+  constructor(private searcher: SearchService, private spinner: NgxSpinnerService) {
     this.optionCadenasForm = new FormGroup({
       soriana: new FormControl(true),
       heb: new FormControl(false),
@@ -53,10 +54,13 @@ export class ListaComponent implements OnInit {
 
   ngOnInit() {
 
+
+
   }
 
   public find() {
-
+    this.list = [];
+    this.spinner.show();
     this.list = [];
     for (const attr in this.optionCadenasForm.value) {
       if (this.optionCadenasForm.value[attr]) {
@@ -77,6 +81,7 @@ export class ListaComponent implements OnInit {
 
         this.list = this.order(this.list);
         this.personas = this.order(this.list);
+        this.spinner.hide();
 
       }
 
@@ -99,6 +104,7 @@ export class ListaComponent implements OnInit {
       }
     });
     return array;
+
   }
 
 

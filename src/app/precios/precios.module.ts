@@ -10,6 +10,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { AccordionModule as MkAccordionModule, BoxModule } from 'angular-admin-lte';
 import { FiltrosPipe } from './pipes/filtros.pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ScrollingModule,
     MkAccordionModule,
     BoxModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgxSpinnerModule
   ]
 })
 export class PreciosModule { }

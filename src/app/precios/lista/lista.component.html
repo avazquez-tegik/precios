@@ -1,3 +1,15 @@
+<ngx-spinner
+bdOpacity = 0.7
+bdColor = "#ecf0f5"
+size = "large"
+color = "#4ed7ea"
+type = "ball-fussion"
+[fullScreen] = "true"
+>
+<p style="color: #4ed7ea" > Loading... </p>
+</ngx-spinner>
+
+
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
@@ -9,9 +21,9 @@
           </button>
         </div>
       </div>
-
     </div>
   </div>
+
   <div class="container col-md-12">
     <br />
     <p class="text-center">Filtros</p>
@@ -172,7 +184,7 @@
   <p></p>
   <pagination-controls (pageChange)="p = $event"></pagination-controls>
   <div class="card-group">
-    <div class="col-md-3 col-md-2" *ngFor="let item of list | filtros: filterPost:filterPriceMin:filterPriceMax | paginate: { itemsPerPage: 20, currentPage: p }">
+    <div class="col-md-3 col-md-2" *ngFor="let item of list | filtros: filterPost:filterPriceMin:filterPriceMax | paginate: { itemsPerPage: 15, currentPage: p }">
       <div class="card box">
         <img class="card-img-top img" src="{{ item.imagen }}" />
         <img *ngIf="item.cadena == 'HEB'" src="assets/img/heb.png" class="center" />
