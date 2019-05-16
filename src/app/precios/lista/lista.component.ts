@@ -4,7 +4,6 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { NgxSpinnerService } from 'ngx-spinner';
 
-
 @Component({
   selector: 'app-lista',
   templateUrl: './lista.component.html',
@@ -21,6 +20,7 @@ export class ListaComponent implements OnInit {
   public filtro = 'cadena';
   public tienda = '';
   public p;
+  public show: boolean;
 
   public optionCadenasForm: FormGroup;
   personas: any[];
@@ -63,6 +63,8 @@ export class ListaComponent implements OnInit {
     this.list = [];
     this.spinner.show();
     this.list = [];
+    this.filterPost = '';
+
     for (const attr in this.optionCadenasForm.value) {
       if (this.optionCadenasForm.value[attr]) {
         this.getList(attr);
@@ -81,9 +83,9 @@ export class ListaComponent implements OnInit {
         }
 
         this.list = this.order(this.list);
-        this.personas = this.order(this.list);
         this.spinner.hide();
-
+        this.personas = this.order(this.list);
+        this.show = true;
       }
 
 
