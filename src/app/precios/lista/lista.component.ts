@@ -42,13 +42,16 @@ export class ListaComponent implements OnInit {
       pcel: new FormControl(false),
       costco: new FormControl(false),
       super_walmart: new FormControl(false),
-
       superama: new FormControl(false),
       bodega_aurrera: new FormControl(false),
-
       delsol: new FormControl(false),
       officedepot: new FormControl(false),
-      officemax: new FormControl(false)
+      officemax: new FormControl(false),
+      palacio_hierro: new FormControl(false),
+      innova_sport: new FormControl(false),
+      chedraui: new FormControl(false),
+      marti: new FormControl(false)
+
     });
 
   }

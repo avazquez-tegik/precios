@@ -11,10 +11,11 @@ import { AccordionModule as MkAccordionModule, BoxModule } from 'angular-admin-l
 import { FiltrosPipe } from './pipes/filtros.pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { SearchPipe } from './pipes/search.pipe';
 
 
 @NgModule({
-  declarations: [ListaComponent, FiltrosPipe],
+  declarations: [ListaComponent, FiltrosPipe, SearchPipe],
   imports: [
     CommonModule,
     PreciosRoutingModule,
