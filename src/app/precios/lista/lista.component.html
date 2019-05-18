@@ -16,6 +16,14 @@
         <div class="col-md-5 col-xs-12">
           <mk-box [isSolid]="true" boxColor="#fff" [isCollapsable]="true" [isRemovable]="false" header="Tiendas" [isCollapsed]="true">
             <mk-accordion-group [isMultiple]="false" [formGroup]="optionCadenasForm">
+              <mk-accordion [header]="c.category" *ngFor="let c of options"> <label class="form-check" *ngFor="let branch of c.branches">
+                  <input class="form-check-input" type="checkbox" [formControlName]="branch.name_control" />
+                  <span class="form-check-label">
+                    {{branch.title}}
+                  </span>
+                </label></mk-accordion>
+            </mk-accordion-group>
+            <!-- <mk-accordion-group [isMultiple]="false" [formGroup]="optionCadenasForm">
               <mk-accordion header="Departamentales">
                 <label class="form-check">
                   <input class="form-check-input" type="checkbox" formControlName="liverpool" />
@@ -148,7 +156,7 @@
                   </span>
                 </label>
               </mk-accordion>
-            </mk-accordion-group>
+            </mk-accordion-group>!-->
           </mk-box>
         </div>
       </div>
@@ -192,8 +200,9 @@
   <p></p>
   <pagination-controls (pageChange)="p = $event"></pagination-controls>
   <div class="card-group">
-   <!-- <div class="col-md-3" *ngFor="let item of list | search:filterPost | filtros: filterPost:filterPriceMin:filterPriceMax | paginate: { itemsPerPage: 16, currentPage: p } ">!-->
-    <div class="col-md-3" *ngFor="let item of list | search:filterPost | paginate: { itemsPerPage: 16, currentPage: p } ">
+    <!--<div class="col-md-3" *ngFor="let item of list | filtros: { search: filterPost, min : filterPriceMin, max : filterPriceMax}">
+   !-->
+    <div class="col-md-3" *ngFor="let item of items$ | async | filtros: { search: filterPost, min : filterPriceMin, max : filterPriceMax} | paginate: { itemsPerPage: 16, currentPage: p }">
       <div class="card box">
         <img class="card-img-top img" src="{{ item.imagen }}" />
         <img *ngIf="item.cadena == 'HEB'" src="assets/img/heb.png" class="center" />

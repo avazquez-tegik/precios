@@ -16,7 +16,7 @@ export class SearchService {
   constructor(private http: Http) {}
 
 
-  public search(cadena: string, texto: string, page): Observable < any > {
+  public search(cadena: any, texto: string, page): Observable < any > {
     console.log("CADENA", cadena);
 
     var headers = new Headers({
