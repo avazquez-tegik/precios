@@ -11,6 +11,7 @@ import { AccordionModule as MkAccordionModule, BoxModule } from 'angular-admin-l
 import { FiltrosPipe } from './pipes/filtros.pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { AuthService } from '../core/services/auth.service';
 
 
 @NgModule({
@@ -26,6 +27,6 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     BoxModule,
     NgxPaginationModule,
     NgxSpinnerModule
-  ]
+  ], providers: [AuthService]
 })
 export class PreciosModule { }

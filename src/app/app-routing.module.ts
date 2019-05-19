@@ -84,6 +84,22 @@ const routes: Routes = [{
       title: 'Precios',
       canActivate: [AuthGuard]
     }
+  },
+  {
+    path: 'carrito',
+    loadChildren: './carrito/carrito.module#CarritoModule',
+    data: {
+      title: 'Carrito',
+      canActivate: [AuthGuard]
+    }
+  },
+  {
+    path: 'comparacion',
+    loadChildren: './comparacion/comparacion.module#ComparacionModule',
+    data: {
+      title: 'Comparación',
+      canActivate: [AuthGuard]
+    }
   }
 ];
 

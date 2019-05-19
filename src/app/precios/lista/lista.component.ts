@@ -5,6 +5,10 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { of , Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { Articulo } from '../../core/models/articulo';
+import { AuthService } from '../../core/services/auth.service';
+
 
 @Component({
   selector: 'app-lista',
@@ -31,6 +35,12 @@ export class ListaComponent implements OnInit {
   filterPost = '';
   filterPriceMin = 0;
   filterPriceMax = 500000;
+
+  carritoDoc: AngularFirestoreDocument < any > ;
+  destacadosDoc: AngularFirestoreDocument < any > ;
+
+  mi_carrito: any = {};
+  destacados: any = {};
 
 
   options: any[] = [{
@@ -150,7 +160,10 @@ export class ListaComponent implements OnInit {
 
   ]
 
-  constructor(private searcher: SearchService, private spinner: NgxSpinnerService) {
+  constructor(private searcher: SearchService,
+    private spinner: NgxSpinnerService,
+    private afs: AngularFirestore,
+    private authService: AuthService) {
 
     this.optionCadenasForm = new FormGroup({});
 
@@ -158,34 +171,25 @@ export class ListaComponent implements OnInit {
       for (let branch of cat.branches)
         this.optionCadenasForm.addControl(branch.name_control, new FormControl(branch.value));
 
-
-    /* this.optionCadenasForm = new FormGroup({
-      
-       sears: new FormControl(false),
-       sanborns: new FormControl(false),
-       bestbuy: new FormControl(false),
-       farmacias_del_ahorro: new FormControl(false),
-       walmart: new FormControl(false),
-       home_depot: new FormControl(false),
-       pcel: new FormControl(false),
-       costco: new FormControl(false),
-       super_walmart: new FormControl(false),
-       superama: new FormControl(false),
-       bodega_aurrera: new FormControl(false),
-       delsol: new FormControl(false),
-       officedepot: new FormControl(false),
-       officemax: new FormControl(false),
-       palacio_hierro: new FormControl(false),
-       innova_sport: new FormControl(false),
-       chedraui: new FormControl(false),
-       marti: new FormControl(false)
-
-     });*/
-
   }
 
   ngOnInit() {
 
+
+    let user = this.authService.getUser().subscribe(user => {
+      this.carritoDoc = this.afs.doc('carrito/' + user.id);
+
+      this.carritoDoc.valueChanges().subscribe(carrito => {
+        this.mi_carrito = carrito;
+      })
+
+      this.destacadosDoc = this.afs.doc('comparacion/destacados');
+      this.destacadosDoc.valueChanges().subscribe(destacados => {
+        this.destacados = destacados;
+      })
+
+
+    });
 
 
   }
@@ -248,6 +252,36 @@ export class ListaComponent implements OnInit {
       }
     });
     return array;
+
+  }
+
+  public agregarCarrito(articulo: Articulo) {
+    let id: string = btoa(articulo.enlace_informacion);
+
+    if (!this.mi_carrito) {
+      this.mi_carrito = {};
+    }
+    this.mi_carrito[id] = articulo;
+
+    this.carritoDoc.set(this.mi_carrito, { merge: true });
+
+
+
+
+  }
+
+
+  public agregarDestacado(articulo: Articulo) {
+    let id: string = btoa(articulo.enlace_informacion);
+
+    if (!this.destacados) {
+      this.destacados = {};
+    }
+    this.destacados[id] = articulo;
+
+    this.destacadosDoc.set(this.destacados, { merge: true });
+
+
 
   }
 
