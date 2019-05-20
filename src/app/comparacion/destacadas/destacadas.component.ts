@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Articulo } from '../../core/models/articulo';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-destacadas',
@@ -9,19 +11,25 @@ import { Articulo } from '../../core/models/articulo';
 })
 export class DestacadasComponent implements OnInit {
 
-  destacadosDoc: AngularFirestoreDocument < any > ;
-  public destacados: Articulo[] = [];
+  destacadosCol: AngularFirestoreCollection < any > ;
+  public destacados: any[]=[];
 
+  public p;
+  public text: string;
+  filterPost = '';
   constructor(private afs: AngularFirestore) {}
 
   ngOnInit() {
-    this.destacadosDoc = this.afs.doc('comparacion/destacados');
+    this.destacadosCol = this.afs.collection('comparacion');
 
-    this.destacadosDoc.valueChanges().subscribe(destacados => {
-      for (let attr in destacados) {
-        this.destacados.push(destacados[attr]);
-      }
-    });
+
+    this.destacadosCol.valueChanges().subscribe(res => {
+      this.destacados= res;
+    })
+  }
+
+  find() {
+
   }
 
 }

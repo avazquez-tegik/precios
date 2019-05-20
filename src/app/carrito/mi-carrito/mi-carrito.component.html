@@ -1,3 +1,56 @@
-<p>
-{{mi_carrito | json}}
-</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="input-group mb-5">
+        <input type="text" class="form-control mr-sm-2" placeholder="Articulo" [(ngModel)]="text" />
+        <div class="input-group-append">
+          <button class="btn btn-outline-primary" (click)="find()">
+            Buscar ...
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  <div class="card-group">
+    <!--<div class="col-md-3" *ngFor="let item of list | filtros: { search: filterPost, min : filterPriceMin, max : filterPriceMax}">
+   !-->
+    <div class="col-md-3" *ngFor="let item of mi_carrito | search: { search: filterPost} | paginate: { itemsPerPage: 16, currentPage: p }">
+      <div class="card box">
+        <img class="card-img-top img" src="{{ item.imagen }}" />
+        <img *ngIf="item.cadena == 'HEB'" src="assets/img/heb.png" class="center" />
+        <img *ngIf="item.cadena == 'Soriana'" src="assets/img/soriana.png" class="center" />
+        <img *ngIf="item.cadena == 'liverpool'" src="assets/img/liverpool.png" class="center" />
+        <img *ngIf="item.cadena == 'sears'" src="assets/img/sears.jpeg" class="center" />
+        <img *ngIf="item.cadena == 'bestbuy'" src="assets/img/bestbuy.png" class="center" />
+        <img *ngIf="item.cadena == 'sanborns'" src="assets/img/sanborns.png" class="center" />
+        <img *ngIf="item.cadena == 'Farmacias Del Ahorro'" src="assets/img/farmacias_del_ahorro.jpg" class="center" />
+        <img *ngIf="item.cadena == 'WalMart' || item.cadena == 'SuperWalMart'" src="assets/img/walmart.png" class="center" />
+        <img *ngIf="item.cadena == 'HomeDepot'" src="assets/img/homedepot.png" class="center" />
+        <img *ngIf="item.cadena == 'Pcel'" src="assets/img/pcel.png" class="center" />
+        <img *ngIf="item.cadena == 'Costco'" src="assets/img/costco.png" class="center" />
+        <img *ngIf="item.cadena == 'Superama'" src="assets/img/superama.png" class="center" />
+        <img *ngIf="item.cadena == 'DelSol'" src="assets/img/del_sol.png" class="center" />
+        <img *ngIf="item.cadena == 'officedepot'" src="assets/img/office_depot.png" class="center" />
+        <img *ngIf="item.cadena == 'Office Max'" src="assets/img/officemax.jpg" class="center" /><img *ngIf="item.cadena == 'BodegaAurrera'" src="
+assets/img/bodega_aurrera.png" class="center" />
+        <img *ngIf="item.cadena == 'PalacioHierro'" src="assets/img/palacio_hierro.jpeg" class="center" />
+        <img *ngIf="item.cadena == 'Marti'" src="assets/img/marti.jpeg" class="center" />
+        <img *ngIf="item.cadena == 'InnovaSport'" src="assets/img/innova_sport.png" class="center" />
+        <img *ngIf="item.cadena == 'Chedraui'" src="assets/img/chedraui.png" class="center" />
+        <div class="card-body">
+          <h5 class="card-title">{{ item.titulo }}</h5>
+        </div>
+        <h4 class="card-title" class="text-center">
+          <strong> {{ item.precio | currency }}</strong>
+        </h4>
+        <a href="{{ item.enlace_informacion }}" target="_blank">
+          <button type="button" class="btnx btn-primary btn-block">
+            Comprar
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>

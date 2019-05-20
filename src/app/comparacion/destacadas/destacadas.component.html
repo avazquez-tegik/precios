@@ -1,2 +1,39 @@
-<p>
-{{ destacados | json}}</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="input-group mb-5">
+        <input type="text" class="form-control mr-sm-2" placeholder="Articulo" [(ngModel)]="text" />
+        <div class="input-group-append">
+          <button class="btn btn-outline-primary" (click)="find()">
+            Buscar ...
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  <div class="card-group">
+    <div class="col-md-12" *ngFor="let destacado of destacados | paginate: { itemsPerPage: 16, currentPage: p }">
+      <div class="card box">
+        <div class="card-body">
+          <h5 class="card-title"><strong>{{ destacado.etiqueta.toUpperCase() }}</strong></h5>
+        </div>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let item of destacado.articulos">
+            <div class="row">
+              <div class="col-md-6">
+                <p>{{item.titulo}} </p>
+                <p> {{item.cadena}}</p>
+                <p><strong> $ {{item.precio}}</strong></p>
+              </div>
+              <div class="col-md-6">
+                <img class="card-img-top img" [src]=" item.imagen" />
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>

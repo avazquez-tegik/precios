@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { PreciosRoutingModule } from './precios-routing.module';
 import { ListaComponent } from './lista/lista.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -12,6 +12,7 @@ import { FiltrosPipe } from './pipes/filtros.pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AuthService } from '../core/services/auth.service';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { AuthService } from '../core/services/auth.service';
     MkAccordionModule,
     BoxModule,
     NgxPaginationModule,
-    NgxSpinnerModule
-  ], providers: [AuthService]
+    NgxSpinnerModule, ModalModule.forRoot()
+  ],
+  providers: [AuthService]
 })
-export class PreciosModule { }
+export class PreciosModule {}

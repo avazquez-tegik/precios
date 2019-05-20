@@ -66,6 +66,7 @@
     "highcharts-angular": "^2.4.0",
     "ionicons": "^2.0.1",
     "ng-chartist": "^4.1.0",
+    "ngx-bootstrap": "^4.1.1",
     "ngx-pagination": "^3.2.1",
     "ngx-spinner": "^7.1.4",
     "prismjs": "^1.8.4",

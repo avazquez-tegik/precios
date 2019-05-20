@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { SearchService } from '../services/search.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { of , Observable } from 'rxjs';
@@ -8,17 +8,20 @@ import { mergeMap } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Articulo } from '../../core/models/articulo';
 import { AuthService } from '../../core/services/auth.service';
-
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { FiltrosPipe } from '../pipes/filtros.pipe';
+import { cadenas } from '../data/cadenas';
 
 @Component({
   selector: 'app-lista',
   templateUrl: './lista.component.html',
   styleUrls: ['./lista.component.scss'],
-  providers: [SearchService]
+  providers: [SearchService, FiltrosPipe]
 })
 export class ListaComponent implements OnInit {
 
   @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
+  modalRef: BsModalRef;
 
 
   public text: string;
@@ -28,10 +31,17 @@ export class ListaComponent implements OnInit {
   public p;
   public show: boolean;
 
+
+  public destacadoForm: FormGroup = new FormGroup({
+    etiqueta: new FormControl(),
+    articulos: new FormArray([])
+  })
+
+
   public items$: Observable < any[] > ;
 
   public optionCadenasForm: FormGroup;
-  personas: any[];
+
   filterPost = '';
   filterPriceMin = 0;
   filterPriceMax = 500000;
@@ -42,128 +52,18 @@ export class ListaComponent implements OnInit {
   mi_carrito: any = {};
   destacados: any = {};
 
-
-  options: any[] = [{
-      category: 'Departamentales',
-      branches: [{
-        name_control: 'soriana',
-        title: 'Soriana',
-        value: true
-      }, {
-        name_control: 'liverpool',
-        title: 'Liverpool',
-        value: false
-      }, {
-        name_control: 'sears',
-        title: 'Sears',
-        value: false
-      }, {
-        name_control: 'sanborns',
-        title: 'Sanborns',
-        value: false
-      }, {
-        name_control: 'costco',
-        title: 'Costco',
-        value: false
-      }, {
-        name_control: 'walmart',
-        title: 'WalMart',
-        value: false
-      }, {
-        name_control: 'delsol',
-        title: 'DelSol',
-        value: false
-      }, {
-        name_control: 'palacio_hierro',
-        title: 'Palacio Hierro',
-        value: false
-      }]
-    },
-    {
-      category: 'SuperMercados',
-      branches: [{
-          name_control: 'heb',
-          title: 'HEB',
-          value: false
-        },
-        {
-          name_control: 'super_walmart',
-          title: 'WalMart',
-          value: false
-        },
-        {
-          name_control: 'bodega_aurrera',
-          title: 'Bodega Aurrera',
-          value: false
-        }, {
-          name_control: 'superama',
-          title: 'Superama',
-          value: false
-        }, {
-          name_control: 'chedraui',
-          title: 'Chedraui',
-          value: false
-        }
-      ]
-    },
-    {
-      category: 'Deporte',
-      branches: [{
-        name_control: 'innova_sport',
-        title: 'Innova Sport',
-        value: false
-      }, {
-        name_control: 'marti',
-        title: 'Marti',
-        value: false
-      }]
-    }, {
-      category: 'Electronica',
-      branches: [{
-        name_control: 'bestbuy',
-        title: 'BestBuy',
-        value: false
-      }, {
-        name_control: 'pcel',
-        title: 'Pcel',
-        value: false
-      }]
-    },
-    {
-      category: 'Farmacias',
-      branches: [{
-        name_control: 'farmacias_del_ahorro',
-        title: 'Farmacias del Ahorro',
-        value: false
-      }]
-    },
-    {
-      category: 'Hogar',
-      branches: [{
-        name_control: 'home_depot',
-        title: 'Home Depot',
-        value: false
-      }]
-    }, {
-      category: 'Oficina',
-      branches: [{
-        name_control: 'officedepot',
-        title: 'Office Depot',
-        value: false
-      }, {
-        name_control: 'officemax',
-        title: 'Office Max',
-        value: false
-      }]
-    }
+  articulos: Articulo[] = [];
 
 
-  ]
+  options: any[] = cadenas
 
   constructor(private searcher: SearchService,
     private spinner: NgxSpinnerService,
     private afs: AngularFirestore,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private modalService: BsModalService,
+    private fb: FormBuilder,
+    private fp: FiltrosPipe) {
 
     this.optionCadenasForm = new FormGroup({});
 
@@ -181,11 +81,6 @@ export class ListaComponent implements OnInit {
 
       this.carritoDoc.valueChanges().subscribe(carrito => {
         this.mi_carrito = carrito;
-      })
-
-      this.destacadosDoc = this.afs.doc('comparacion/destacados');
-      this.destacadosDoc.valueChanges().subscribe(destacados => {
-        this.destacados = destacados;
       })
 
 
@@ -224,7 +119,10 @@ export class ListaComponent implements OnInit {
       search.subscribe(res => {
 
         this.spinner.hide();
-        items = items.concat(res.results)
+        items = items.concat(res.results);
+
+        this.articulos = items;
+
         this.show = true;
         items = this.order(items);
         observer.next(items);
@@ -236,6 +134,11 @@ export class ListaComponent implements OnInit {
 
   }
 
+
+
+  get articulosForm(): FormArray {
+    return this.destacadoForm.get('articulos') as FormArray;
+  }
 
 
   order(array: Array < any > ): Array < any > {
@@ -280,6 +183,59 @@ export class ListaComponent implements OnInit {
     this.destacados[id] = articulo;
 
     this.destacadosDoc.set(this.destacados, { merge: true });
+
+
+
+  }
+
+  public compatir(template: TemplateRef < any > ) {
+    this.modalRef = this.modalService.show(template);
+
+
+
+    let arts = this.fp.transform(this.articulos, {
+      search: this.filterPost,
+      min: this.filterPriceMin,
+      max: this.filterPriceMax
+    });
+
+    this.destacadoForm.setControl('articulos', new FormArray([]));
+
+
+    for (let articulo of arts) {
+      console.log(articulo);
+      delete articulo['palabras_claves'];
+      articulo['selected'] = false;
+      this.articulosForm.push(this.fb.group(articulo));
+    }
+
+
+
+
+
+  }
+
+  public guardarDestacado() {
+
+    let etiqueta: string = this.destacadoForm.value.etiqueta;
+    etiqueta = etiqueta.replace(" ", "_");
+    etiqueta = etiqueta.toLowerCase();
+    this.destacadosDoc = this.afs.doc('comparacion/' + etiqueta);
+
+
+    let destacado = this.destacadoForm.value;
+
+
+    let arts: any[] = destacado.articulos.filter(art=>{
+      return art['selected']
+    });
+
+    console.log(destacado);
+
+    destacado.articulos = arts;
+    console.log(destacado);
+    this.destacadosDoc.set(destacado, { merge: true });
+    this.modalRef.hide();
 
 
 

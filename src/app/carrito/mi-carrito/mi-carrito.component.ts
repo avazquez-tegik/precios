@@ -13,6 +13,10 @@ export class MiCarritoComponent implements OnInit {
 
   public mi_carrito: Articulo[] = [];
 
+  public p;
+  public text: string;
+  filterPost = '';
+
 
   constructor(private authService: AuthService,
     private afs: AngularFirestore) {}
@@ -29,6 +33,9 @@ export class MiCarritoComponent implements OnInit {
       })
 
     });
+  }
+  public find(){
+    
   }
 
 }

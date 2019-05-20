@@ -1,44 +1,29 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'filtros'
+  name: 'search'
 })
-export class FiltrosPipe implements PipeTransform {
+export class SearchPipe implements PipeTransform {
 
   transform(items: any[], arg: any): any {
-
+  	
     if (!items) {
       return items;
     }
 
-
-    let filterItems = [];
-
-    for (let i = 0; i < items.length; i++) {
-
-      if (items[i]) {
-
-        let precio = parseFloat(items[i].precio);
-        if (precio >= arg.min && precio < arg.max)
-          filterItems.push(items[i]);
-
-      }
-    }
-
-
     if (!arg.search)
-      return filterItems;
+      return items;
 
 
     if (arg.search.trim() == '')
-      return filterItems;
+      return items;
 
 
 
 
     let words: string[] = arg.search.split(' ');
 
-    let search_terms = filterItems.filter(item => {
+    let search_terms = items.filter(item => {
 
       let titulo = item.titulo.toLowerCase().trim();
       let num_coincidencias = 0;
@@ -62,5 +47,4 @@ export class FiltrosPipe implements PipeTransform {
 
     return search_terms;
   }
-
 }

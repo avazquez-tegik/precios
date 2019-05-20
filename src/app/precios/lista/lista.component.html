@@ -2,6 +2,13 @@
   <p style="color: #4ed7ea"> Loading... </p>
 </ngx-spinner>
 <div class="container-fluid">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="form-inline my-2 my-lg-0">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="compatir(template)">Compartir</button>
+      </div>
+    </div>
+  </nav>
   <div class="row">
     <div class="col-md-12">
       <div class="input-group mb-5">
@@ -64,10 +71,8 @@
   </div>
   <!--container end.//-->
   <p></p>
-  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  <pagination-controls (pageChange)="p = $event" *ngIf="show"></pagination-controls>
   <div class="card-group">
-    <!--<div class="col-md-3" *ngFor="let item of list | filtros: { search: filterPost, min : filterPriceMin, max : filterPriceMax}">
-   !-->
     <div class="col-md-3" *ngFor="let item of items$ | async | filtros: { search: filterPost, min : filterPriceMin, max : filterPriceMax} | paginate: { itemsPerPage: 16, currentPage: p }">
       <div class="card box">
         <img class="card-img-top img" src="{{ item.imagen }}" />
@@ -89,7 +94,7 @@
 assets/img/bodega_aurrera.png" class="center" />
         <img *ngIf="item.cadena == 'PalacioHierro'" src="assets/img/palacio_hierro.jpeg" class="center" />
         <img *ngIf="item.cadena == 'Marti'" src="assets/img/marti.jpeg" class="center" />
-        <img *ngIf="item.cadena == 'InnovaSport'" src="assets/img/innova_sport.jpeg" class="center" />
+        <img *ngIf="item.cadena == 'InnovaSport'" src="assets/img/innova_sport.png" class="center" />
         <img *ngIf="item.cadena == 'Chedraui'" src="assets/img/chedraui.png" class="center" />
         <div class="card-body">
           <h5 class="card-title">{{ item.titulo }}</h5>
@@ -103,17 +108,49 @@ assets/img/bodega_aurrera.png" class="center" />
           </button>
         </a>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-       
-            <div class="form-inline my-2 my-lg-0">
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="agregarCarrito(item)">Agregar Carrito</button>
-              <div class="form-inline my-2 my-lg-0">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="agregarDestacado(item)">Compatir Comparacion</button>
-              </div>
-            </div>
+          <div class="form-inline my-2 my-lg-0">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="agregarCarrito(item)">Agregar Carrito</button>
+          </div>
         </nav>
       </div>
     </div>
   </div>
   <p></p>
-  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  <pagination-controls (pageChange)="p = $event" *ngIf="show"></pagination-controls>
 </div>
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Compartir</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" [formGroup]="destacadoForm">
+    <div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Etiqueta</label>
+        <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Etiqueta" formControlName="etiqueta">
+      </div>
+      <div class="form-group" formArrayName="articulos">
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let item of articulosForm.controls; let i = index;">
+            <div class="row">
+              <div class="col-md-6">
+                <div [formGroupName]="i">
+                  <input type="checkbox" formControlName="selected">
+                  <p>{{item.value.titulo}} </p>
+                  <p> {{item.value.cadena}}</p>
+                  <p> {{item.value.precio}}</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <img class="card-img-top img" src="{{ item.value.imagen }}" />
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <button type="submit" class="btn btn-primary" (click)="guardarDestacado()">Guardar</button>
+    </div>
+  </div>
+</ng-template>
