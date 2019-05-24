@@ -8,8 +8,8 @@ export class FiltrosPipe implements PipeTransform {
   transform(items: any[], arg: any): any {
 
 
-
-    let filterItemsTiendas = [];
+if (items) {
+    let filterItemsTiendas= [];
 
     for (let i = 0; i < items.length; i++) {
       if (items[i]) {
@@ -23,10 +23,6 @@ export class FiltrosPipe implements PipeTransform {
       }
     }
 
-
-    if (!filterItemsTiendas) {
-      return filterItemsTiendas;
-    }
 
 
     let filterItems = [];
@@ -105,4 +101,5 @@ export class FiltrosPipe implements PipeTransform {
     return search_terms;
   }
 
+}
 }
