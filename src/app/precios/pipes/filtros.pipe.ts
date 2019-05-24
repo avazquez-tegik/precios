@@ -7,31 +7,51 @@ export class FiltrosPipe implements PipeTransform {
 
   transform(items: any[], arg: any): any {
 
-    if (!items) {
-      return items;
+
+
+    let filterItemsTiendas = [];
+
+    for (let i = 0; i < items.length; i++) {
+      if (items[i]) {
+        for (let atributo in arg.tiendas) {
+          if (arg.tiendas[atributo] === true) {
+            if (items[i].value === atributo) {
+              filterItemsTiendas.push(items[i]);
+            }
+          }
+        }
+      }
+    }
+
+
+    if (!filterItemsTiendas) {
+      return filterItemsTiendas;
     }
 
 
     let filterItems = [];
 
-    for (let i = 0; i < items.length; i++) {
+    for (let i = 0; i < filterItemsTiendas.length; i++) {
 
-      if (items[i]) {
+      if (filterItemsTiendas[i]) {
 
-        let precio = parseFloat(items[i].precio);
-        if (precio >= arg.min && precio < arg.max)
-          filterItems.push(items[i]);
+        let precio = parseFloat(filterItemsTiendas[i].precio);
+        if (precio >= arg.min && precio < arg.max) {
+          filterItems.push(filterItemsTiendas[i]);
+        }
 
       }
     }
 
 
-    if (!arg.search)
+    if (!arg.search) {
       return filterItems;
+    }
 
 
-    if (arg.search.trim() == '')
+    if (arg.search.trim() === '') {
       return filterItems;
+    }
 
 
 
@@ -40,14 +60,36 @@ export class FiltrosPipe implements PipeTransform {
 
     let search_terms = filterItems.filter(item => {
 
-      let titulo = item.titulo.toLowerCase().trim();
+      let titulo = item.titulo.toLowerCase().trim()
+        .replace('Á', 'A')
+        .replace('É', 'E')
+        .replace('Í', 'I')
+        .replace('Ó', 'O')
+        .replace('Ú', 'U')
+        .replace('á', 'a')
+        .replace('é', 'e')
+        .replace('í', 'i')
+        .replace('ó', 'o')
+        .replace('ú', 'u');
+
       let num_coincidencias = 0;
 
       for (let word of words) {
-        word = word.toLowerCase().trim();
+        word = word.toLowerCase().trim()
+        .replace('Á', 'A')
+        .replace('É', 'E')
+        .replace('Í', 'I')
+        .replace('Ó', 'O')
+        .replace('Ú', 'U')
+        .replace('á', 'a')
+        .replace('é', 'e')
+        .replace('í', 'i')
+        .replace('ó', 'o')
+        .replace('ú', 'u');
 
-        if (titulo.toLowerCase().indexOf(word.toLowerCase()) >= 0)
+        if (titulo.toLowerCase().indexOf(word.toLowerCase()) >= 0) {
           num_coincidencias += 1;
+        }
 
       }
 

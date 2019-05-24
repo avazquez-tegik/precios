@@ -12,6 +12,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FiltrosPipe } from '../pipes/filtros.pipe';
 import { cadenas } from '../data/cadenas';
 
+
 @Component({
   selector: 'app-lista',
   templateUrl: './lista.component.html',
@@ -30,12 +31,13 @@ export class ListaComponent implements OnInit {
   public tienda = '';
   public p;
   public show: boolean;
+  public tiendas: any;
 
 
   public destacadoForm: FormGroup = new FormGroup({
     etiqueta: new FormControl(),
     articulos: new FormArray([])
-  })
+  });
 
 
   public items$: Observable < any[] > ;
@@ -55,7 +57,7 @@ export class ListaComponent implements OnInit {
   articulos: Articulo[] = [];
 
 
-  options: any[] = cadenas
+  options: any[] = cadenas;
 
   constructor(private searcher: SearchService,
     private spinner: NgxSpinnerService,
@@ -67,14 +69,17 @@ export class ListaComponent implements OnInit {
 
     this.optionCadenasForm = new FormGroup({});
 
-    for (let cat of this.options)
-      for (let branch of cat.branches)
+    for (let cat of this.options) {
+      for (let branch of cat.branches) {
         this.optionCadenasForm.addControl(branch.name_control, new FormControl(branch.value));
+      }
+    }
 
   }
 
   ngOnInit() {
 
+    console.log (this.optionCadenasForm.value);
 
     let user = this.authService.getUser().subscribe(user => {
       this.carritoDoc = this.afs.doc('carrito/' + user.id);
@@ -93,9 +98,11 @@ export class ListaComponent implements OnInit {
   public getOptionsSelect(): Observable < string > {
     return new Observable(observer => {
 
-      for (let attr in this.optionCadenasForm.value)
-        if (this.optionCadenasForm.value[attr])
+      for (let attr in this.optionCadenasForm.value) {
+        if (this.optionCadenasForm.value[attr]) {
           observer.next(attr);
+        }
+      }
 
       observer.complete();
     });
