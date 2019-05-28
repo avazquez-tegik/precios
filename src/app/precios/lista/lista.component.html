@@ -2,14 +2,15 @@
   <p style="color: #4ed7ea"> Loading... </p>
 </ngx-spinner>
 <div class="container-fluid">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" *ngIf="show" >
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <div class="form-inline my-2 my-lg-0">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="compatir(template)">Compartir</button>
+      <div class="form-inline my-2 my-lg-0" >
+        <button class="btn btn-outline-primary"type="submit" (click)="compatir(template)">Compartir</button>
+        <button class="btn btn-outline-primary"  type="submit" (click)="show = false" >Nueva Busqueda</button>
       </div>
     </div>
   </nav>
-  <div class="row">
+  <div class="row" *ngIf="!show">
     <div class="col-md-12">
       <div class="input-group mb-5">
         <input type="text" class="form-control mr-sm-2" placeholder="Articulo" [(ngModel)]="text" />
@@ -20,7 +21,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" *ngIf="!show">
         <div class="col-md-5 col-xs-12">
           <mk-box [isSolid]="true" boxColor="#fff" [isCollapsable]="true" [isRemovable]="false" header="Tiendas" [isCollapsed]="true">
             <mk-accordion-group [isMultiple]="false" [formGroup]="optionCadenasForm">
@@ -40,17 +41,13 @@
   </div>
 
   <div class="container col-md-12" *ngIf="show">
-    <p class="text-center">Filtros</p>
-    <hr />
-
-
-
-
+    <hr/>
+    <h5 p class="text-center">Filtros</h5>
     <div class="row">
       <div class="col-md-5 col-xs-12">
         <mk-box [isSolid]="true" boxColor="#fff" [isCollapsable]="true" [isRemovable]="false" header="Tiendas" [isCollapsed]="true">
           <mk-accordion-group [isMultiple]="false" [formGroup]="optionCadenasForm">
-            <mk-accordion header="Refine por Tienda" >
+            <mk-accordion header="Refine busqueda por Tiendas" >
                <label class="form-check" *ngFor="let filtroTienda of filtroTiendas">
                 <input class="form-check-input" type="checkbox" [formControlName]="filtroTienda.name_control" />
                 <span class="form-check-label">
@@ -62,10 +59,6 @@
         </mk-box>
       </div>
     </div>
-
-
-
-
 
     <div class="row">
       <div class="col-md-5">
@@ -99,14 +92,14 @@
     <!-- row.// -->
   </div>
   <!--container end.//-->
-
-
-  <p></p>
+<h5 *ngIf="show" class="text-center">Resultados</h5>
+  <hr />
+  <p ></p>
   <pagination-controls (pageChange)="p = $event" *ngIf="show"></pagination-controls>
   <div class="card-group">
     <div class="col-md-3" *ngFor="let item of items$ | async | filtros: { search: filterPost, min : filterPriceMin,
                                                            max : filterPriceMax, tiendas: optionCadenasForm.value } | paginate: { itemsPerPage: 16, currentPage: p }">
-      <div class="card box">
+      <div class="card box" *ngIf="show">
         <img class="card-img-top img" src="{{ item.imagen }}" />
         <img *ngIf="item.cadena == 'HEB'" src="assets/img/heb.png" class="center" />
         <img *ngIf="item.cadena == 'Soriana'" src="assets/img/soriana.png" class="center" />

@@ -20,6 +20,8 @@
   width: 20%;
 }
 
+
+
 .box {
   position: relative;
   padding: 30px;
@@ -31,11 +33,13 @@
   border-bottom-right-radius: 20px;
   border: 2px solid #7091da;
   overflow-y: hidden;
+
 }
 
 .box:hover {
   transform: scale(1.03);
   transition: 0.5s;
+
 }
 
 .img:hover {
