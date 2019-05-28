@@ -42,6 +42,31 @@
   <div class="container col-md-12" *ngIf="show">
     <p class="text-center">Filtros</p>
     <hr />
+
+
+
+
+    <div class="row">
+      <div class="col-md-5 col-xs-12">
+        <mk-box [isSolid]="true" boxColor="#fff" [isCollapsable]="true" [isRemovable]="false" header="Tiendas" [isCollapsed]="true">
+          <mk-accordion-group [isMultiple]="false" [formGroup]="optionCadenasForm">
+            <mk-accordion header="Refine por Tienda" >
+               <label class="form-check" *ngFor="let filtroTienda of filtroTiendas">
+                <input class="form-check-input" type="checkbox" [formControlName]="filtroTienda.name_control" />
+                <span class="form-check-label">
+                  {{filtroTienda.title}}
+                </span>
+              </label>
+            </mk-accordion>
+          </mk-accordion-group>
+        </mk-box>
+      </div>
+    </div>
+
+
+
+
+
     <div class="row">
       <div class="col-md-5">
         <div class="form-group">
@@ -74,6 +99,8 @@
     <!-- row.// -->
   </div>
   <!--container end.//-->
+
+
   <p></p>
   <pagination-controls (pageChange)="p = $event" *ngIf="show"></pagination-controls>
   <div class="card-group">
@@ -159,3 +186,5 @@
     </div>
   </div>
 </ng-template>
+
+

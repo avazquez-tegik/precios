@@ -32,6 +32,7 @@ export class ListaComponent implements OnInit {
   public p;
   public show: boolean;
   public tiendas: any;
+  public filtroTiendas: any[];
 
 
   public destacadoForm: FormGroup = new FormGroup({
@@ -77,9 +78,10 @@ export class ListaComponent implements OnInit {
 
   }
 
+
   ngOnInit() {
 
-    console.log (this.optionCadenasForm.value);
+
 
     let user = this.authService.getUser().subscribe(user => {
       this.carritoDoc = this.afs.doc('carrito/' + user.id);
@@ -108,13 +110,15 @@ export class ListaComponent implements OnInit {
     });
   }
 
+
+
+
   public find() {
     this.spinner.show();
     this.filterPost = '';
-
     let options: string[] = [];
     let listCadenas$ = this.getOptionsSelect();
-    let search = listCadenas$.pipe(mergeMap(value =>
+       let search = listCadenas$.pipe(mergeMap(value =>
       this.searcher.search(value, this.text, 1)
     ));
 
@@ -126,6 +130,7 @@ export class ListaComponent implements OnInit {
       search.subscribe(res => {
 
         this.spinner.hide();
+
         items = items.concat(res.results);
 
         this.articulos = items;
@@ -136,6 +141,8 @@ export class ListaComponent implements OnInit {
 
       });
 
+      this.filtroTiendas = this.getTiendasIncluidas();
+      console.log(this.filtroTiendas);
     });
 
 
@@ -149,7 +156,6 @@ export class ListaComponent implements OnInit {
 
 
   order(array: Array < any > ): Array < any > {
-
     if (!array || array === undefined || array.length === 0) { return []; }
 
     array.sort((a: any, b: any) => {
@@ -249,7 +255,22 @@ export class ListaComponent implements OnInit {
   }
 
 
-
+  public getTiendasIncluidas() {
+    let tiendasIncluidas: any[] = [];
+    for (let cat of this.options) {
+      for (let branch of cat.branches) {
+        for (let atributo in this.optionCadenasForm.value) {
+          if (this.optionCadenasForm.value[atributo]){
+            if (branch.name_control === atributo) {
+                //console.log(cadenas[i].branches);
+                tiendasIncluidas.push(branch);
+            }
+          }
+      }
+    }
+  }
+  return tiendasIncluidas;
+}
 
 
 }
