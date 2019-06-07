@@ -10,6 +10,11 @@ export const cadenas: any[] = [{
         title: 'Liverpool',
         value: true,
         nombreServ: 'liverpool'
+      },{
+        name_control: 'coppel',
+        title: 'Coppel',
+        value: true,
+        nombreServ: 'coppel'
       }, {
         name_control: 'sears',
         title: 'Sears',
@@ -40,6 +45,16 @@ export const cadenas: any[] = [{
         title: 'Palacio Hierro',
         value: false,
         nombreServ: 'PalacioHierro'
+      },{
+        name_control: 'elektra',
+        title: 'Elecktra',
+        value: false,
+        nombreServ: 'elektra'
+      }, {
+        name_control: 'famsa',
+        title: 'Famsa',
+        value: false,
+        nombreServ: 'famsa'
       }]
     },
     {
@@ -86,6 +101,11 @@ export const cadenas: any[] = [{
         title: 'Marti',
         value: false,
         nombreServ: 'Marti'
+      },{
+        name_control: 'netshoes',
+        title: 'Netshoes',
+        value: false,
+        nombreServ: 'netshoes'
       }]
     }, {
       category: 'Electronica',

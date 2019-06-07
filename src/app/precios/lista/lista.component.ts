@@ -4,7 +4,7 @@ import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { of , Observable } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { mergeMap, map } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Articulo } from '../../core/models/articulo';
 import { AuthService } from '../../core/services/auth.service';
@@ -52,10 +52,13 @@ export class ListaComponent implements OnInit {
   carritoDoc: AngularFirestoreDocument < any > ;
   destacadosDoc: AngularFirestoreDocument < any > ;
 
+  busqueda$: Observable < any[] > ;
+
   mi_carrito: any = {};
   destacados: any = {};
 
   articulos: Articulo[] = [];
+  user: any;
 
 
   options: any[] = cadenas;
@@ -85,10 +88,13 @@ export class ListaComponent implements OnInit {
 
     let user = this.authService.getUser().subscribe(user => {
       this.carritoDoc = this.afs.doc('carrito/' + user.id);
+      this.user = user;
 
       this.carritoDoc.valueChanges().subscribe(carrito => {
         this.mi_carrito = carrito;
       })
+
+      this.busqueda$ = this.afs.collection('busqueda/' + this.user.id + "/resultados").valueChanges();
 
 
     });
@@ -114,36 +120,20 @@ export class ListaComponent implements OnInit {
 
 
   public find() {
-    this.spinner.show();
+    //this.spinner.show();
     this.filterPost = '';
     let options: string[] = [];
     let listCadenas$ = this.getOptionsSelect();
-       let search = listCadenas$.pipe(mergeMap(value =>
-      this.searcher.search(value, this.text, 1)
+
+    let search = listCadenas$.pipe(mergeMap(value =>
+      this.searcher.search(value, this.text, 1, this.user.id)
     ));
 
-    this.items$ = new Observable(observer => {
+    search.subscribe(res => {
 
-      let items: any[] = [];
-      observer.next(items);
-
-      search.subscribe(res => {
-
-        this.spinner.hide();
-
-        items = items.concat(res.results);
-
-        this.articulos = items;
-
-        this.show = true;
-        items = this.order(items);
-        observer.next(items);
-
-      });
-
-      this.filtroTiendas = this.getTiendasIncluidas();
-      console.log(this.filtroTiendas);
     });
+
+
 
 
   }
@@ -154,22 +144,6 @@ export class ListaComponent implements OnInit {
     return this.destacadoForm.get('articulos') as FormArray;
   }
 
-
-  order(array: Array < any > ): Array < any > {
-    if (!array || array === undefined || array.length === 0) { return []; }
-
-    array.sort((a: any, b: any) => {
-      if (Number(a.precio) < Number(b.precio)) {
-        return -1;
-      } else if (Number(a.precio) > Number(b.precio)) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
-    return array;
-
-  }
 
   public agregarCarrito(articulo: Articulo) {
     let id: string = btoa(articulo.enlace_informacion);
@@ -204,8 +178,6 @@ export class ListaComponent implements OnInit {
   public compatir(template: TemplateRef < any > ) {
     this.modalRef = this.modalService.show(template);
 
-
-
     let arts = this.fp.transform(this.articulos, {
       search: this.filterPost,
       min: this.filterPriceMin,
@@ -216,14 +188,10 @@ export class ListaComponent implements OnInit {
 
 
     for (let articulo of arts) {
-      console.log(articulo);
       delete articulo['palabras_claves'];
       articulo['selected'] = false;
       this.articulosForm.push(this.fb.group(articulo));
     }
-
-
-
 
 
   }
@@ -239,14 +207,12 @@ export class ListaComponent implements OnInit {
     let destacado = this.destacadoForm.value;
 
 
-    let arts: any[] = destacado.articulos.filter(art=>{
+    let arts: any[] = destacado.articulos.filter(art => {
       return art['selected']
     });
 
-    console.log(destacado);
 
     destacado.articulos = arts;
-    console.log(destacado);
     this.destacadosDoc.set(destacado, { merge: true });
     this.modalRef.hide();
 
@@ -260,17 +226,24 @@ export class ListaComponent implements OnInit {
     for (let cat of this.options) {
       for (let branch of cat.branches) {
         for (let atributo in this.optionCadenasForm.value) {
-          if (this.optionCadenasForm.value[atributo]){
+          if (this.optionCadenasForm.value[atributo]) {
             if (branch.name_control === atributo) {
-                //console.log(cadenas[i].branches);
-                tiendasIncluidas.push(branch);
+              tiendasIncluidas.push(branch);
             }
           }
+        }
       }
     }
+    return tiendasIncluidas;
   }
-  return tiendasIncluidas;
-}
 
+
+
+  public nuevoBusqueda() {
+    this.afs.collection('busqueda')
+      .doc(this.user.id).delete().then(() => {
+
+      }).catch(error => console.log(error));
+  }
 
 }

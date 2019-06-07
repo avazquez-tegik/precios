@@ -16,14 +16,15 @@ export class SearchService {
   constructor(private http: Http) {}
 
 
-  public search(cadena: any, texto: string, page): Observable < any > {
+  public search(cadena: any, texto: string, page, uuid: string): Observable < any > {
     console.log("CADENA", cadena);
 
     var headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'X-Amz-Invocation-Type': 'Event'
     });
 
-    var url = this.url + cadena + "?value=" + encodeURI(texto) + "&page=" + page;
+    var url = this.url + cadena + "?value=" + encodeURI(texto) + "&page=" + page + "&uuid="  + uuid;
 
     return this.http.get(encodeURI(url), { headers: headers }).map(res => {
       return res.json();
