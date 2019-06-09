@@ -240,10 +240,11 @@ export class ListaComponent implements OnInit {
 
 
   public nuevoBusqueda() {
-    this.afs.collection('busqueda')
-      .doc(this.user.id).delete().then(() => {
 
-      }).catch(error => console.log(error));
+    this.searcher.borrar(this.user.id).subscribe(item=>{
+      
+    });
+
   }
 
 }

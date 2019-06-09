@@ -31,4 +31,21 @@ export class SearchService {
 
     });;
   }
+
+
+
+  public borrar( uuid: string): Observable < any > {
+
+    var headers = new Headers({
+      'Content-Type': 'application/json',
+      'X-Amz-Invocation-Type': 'Event'
+    });
+
+    var url = this.url + 'busqueda'  + "?uuid="  + uuid;
+
+    return this.http.delete(encodeURI(url), { headers: headers }).map(res => {
+      return res;
+
+    });;
+  }
 }
