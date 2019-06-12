@@ -120,7 +120,7 @@ export class ListaComponent implements OnInit {
 
 
   public find() {
-    //this.spinner.show();
+    this.spinner.show();
     this.filterPost = '';
     let options: string[] = [];
     let listCadenas$ = this.getOptionsSelect();
@@ -132,6 +132,14 @@ export class ListaComponent implements OnInit {
     search.subscribe(res => {
 
     });
+
+
+    this.busqueda$.subscribe(resultado=>{
+      console.log(resultado);
+
+    });
+
+    this.filtroTiendas = this.getTiendasIncluidas();
 
 
 
@@ -241,9 +249,14 @@ export class ListaComponent implements OnInit {
 
   public nuevoBusqueda() {
 
-    this.searcher.borrar(this.user.id).subscribe(item=>{
-      
+    this.searcher.borrar(this.user.id).subscribe(item => {
+
     });
+
+    this.searcher.borrar(this.user.id).subscribe(item => {
+
+    });
+
 
   }
 

@@ -1,7 +1,6 @@
 {
   "rules": {
     ".read": "auth != null",
-    ".write": "auth != null",
-    ".delete": "auth != null"
+    ".write": "auth != null"
   }
 }
