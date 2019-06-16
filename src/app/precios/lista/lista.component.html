@@ -38,8 +38,8 @@
   </div>
   <div class="container col-md-12">
     <hr />
-    <h5 p class="text-center">Filtros</h5>
-    <div class="row">
+    <h5 p class="text-center" *ngIf="show">Filtros</h5>
+    <div class="row" *ngIf="show">
       <div class="col-md-5 col-xs-12">
         <mk-box [isSolid]="true" boxColor="#fff" [isCollapsable]="true" [isRemovable]="false" header="Tiendas" [isCollapsed]="true">
           <mk-accordion-group [isMultiple]="false" [formGroup]="optionCadenasForm">
@@ -55,14 +55,14 @@
         </mk-box>
       </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="show">
       <div class="col-md-5">
         <div class="form-group">
           <input type="text" class="form-control" name="filterPost" placeholder="Contiene..." [(ngModel)]="filterPost">
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="show">
       <div class="col-md-5">
         <mk-box [isSolid]="true" boxColor="#fff" [isCollapsable]="true" [isRemovable]="false" header="Rango precios" [isCollapsed]="true">
           <div class="card">
@@ -90,8 +90,8 @@
   <h5 *ngIf="show" class="text-center">Resultados</h5>
   <hr />
   <p></p>
-  <pagination-controls (pageChange)="p = $event"></pagination-controls>
-  <div class="card-group">
+  <pagination-controls *ngIf="show" (pageChange)="p = $event"></pagination-controls>
+  <div class="card-group" *ngIf="show">
       <div class="col-md-3" *ngFor="let item of busqueda$ | async | filtros: { search: filterPost, min : filterPriceMin, max : filterPriceMax, tiendas: optionCadenasForm.value } | paginate: { itemsPerPage: 16, currentPage: p }">
       <div class="card box">
         <img class="card-img-top img" [src]="item.imagen" />
@@ -135,7 +135,7 @@
     </div>
   </div>
   <p></p>
-  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  <pagination-controls *ngIf="show" (pageChange)="p = $event"></pagination-controls>
 </div>
 <ng-template #template>
   <div class="modal-header">

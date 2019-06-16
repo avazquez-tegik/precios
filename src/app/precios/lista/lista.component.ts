@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, OnDestroy } from '@angular/core';
 import { SearchService } from '../services/search.service';
 import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
@@ -19,7 +19,7 @@ import { cadenas } from '../data/cadenas';
   styleUrls: ['./lista.component.scss'],
   providers: [SearchService, FiltrosPipe]
 })
-export class ListaComponent implements OnInit {
+export class ListaComponent implements OnInit, OnDestroy {
 
   @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
   modalRef: BsModalRef;
@@ -33,6 +33,8 @@ export class ListaComponent implements OnInit {
   public show: boolean;
   public tiendas: any;
   public filtroTiendas: any[];
+
+
 
 
   public destacadoForm: FormGroup = new FormGroup({
@@ -84,17 +86,20 @@ export class ListaComponent implements OnInit {
 
   ngOnInit() {
 
+    this.show= false;
+
+
 
 
     let user = this.authService.getUser().subscribe(user => {
       this.carritoDoc = this.afs.doc('carrito/' + user.id);
       this.user = user;
 
+      this.nuevoBusqueda();
+
       this.carritoDoc.valueChanges().subscribe(carrito => {
         this.mi_carrito = carrito;
       })
-
-      this.busqueda$ = this.afs.collection('busqueda/' + this.user.id + "/resultados").valueChanges();
 
 
     });
@@ -119,26 +124,46 @@ export class ListaComponent implements OnInit {
 
 
 
-  public find() {
+  public async find() {
+
+    //Muestra el spinner
     this.spinner.show();
     this.filterPost = '';
     let options: string[] = [];
+
+    //Obtiene todos las tiendas que esta selecionada como true
     let listCadenas$ = this.getOptionsSelect();
+
+    //Inicializa o Crea un observador que ejecutara un monton de solicitudes 
+    //Se enviara un monton de solicitudes sin espera de respuesta a los lambdas
+    //El backend insertara en firebase 
 
     let search = listCadenas$.pipe(mergeMap(value =>
       this.searcher.search(value, this.text, 1, this.user.id)
     ));
 
+    //Borra todo el contenido para 
+    let borrado = await this.searcher.borrar(this.user.id).toPromise();
+
+    //Empieza a escuchar en firebase para ver cuales sera los valores que se insertara con el lambda
+    this.busqueda$ = this.afs.collection('busqueda/' + this.user.id + "/resultados").valueChanges();
+
+    //Envia todas la solicitudes al mismo tiempo
     search.subscribe(res => {
 
     });
 
 
-    this.busqueda$.subscribe(resultado=>{
-      console.log(resultado);
+    //Escucha los cambios en firebase y cuando ya tenga la primer registro, ocultara el spinner
+    this.busqueda$.subscribe(resultado => {
+      if (resultado.length > 0) {
+        this.spinner.hide();
+        this.show=true;
+      }
 
     });
 
+    //Obtiene todos los filtros selecionado como true
     this.filtroTiendas = this.getTiendasIncluidas();
 
 
@@ -247,17 +272,20 @@ export class ListaComponent implements OnInit {
 
 
 
+
+
   public nuevoBusqueda() {
 
     this.searcher.borrar(this.user.id).subscribe(item => {
 
     });
 
-    this.searcher.borrar(this.user.id).subscribe(item => {
 
-    });
+  }
 
 
+  public ngOnDestroy() {
+    this.nuevoBusqueda();
   }
 
 }

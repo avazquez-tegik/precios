@@ -37,8 +37,7 @@ export class SearchService {
   public borrar( uuid: string): Observable < any > {
 
     var headers = new Headers({
-      'Content-Type': 'application/json',
-      'X-Amz-Invocation-Type': 'Event'
+      'Content-Type': 'application/json'
     });
 
     var url = this.url + 'busqueda'  + "?uuid="  + uuid;
