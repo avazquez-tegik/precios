@@ -6,10 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FiltrosPipe implements PipeTransform {
 
   transform(items: any[], arg: any): any {
-
-    console.log(items);
-    console.log(arg);
-
+  
     if (items) {
       let filterItemsTiendas = [];
 
@@ -47,17 +44,10 @@ export class FiltrosPipe implements PipeTransform {
       }
 
 
-      if (arg.search.trim() === '') {
-        return filterItems;
-      }
 
-
-
-
-      let words: string[] = arg.search.split(' ');
-
+      arg.search =  arg.search0 + ' ' +  arg.search;
+      let words: string[] = arg.search.split(' '); 
       let search_terms = filterItems.filter(item => {
-
         let titulo = item.titulo.toLowerCase().trim()
           .replace('Á', 'A')
           .replace('É', 'E')
@@ -69,9 +59,7 @@ export class FiltrosPipe implements PipeTransform {
           .replace('í', 'i')
           .replace('ó', 'o')
           .replace('ú', 'u');
-
         let num_coincidencias = 0;
-
         for (let word of words) {
           word = word.toLowerCase().trim()
             .replace('Á', 'A')
@@ -84,28 +72,21 @@ export class FiltrosPipe implements PipeTransform {
             .replace('í', 'i')
             .replace('ó', 'o')
             .replace('ú', 'u');
-
           if (titulo.toLowerCase().indexOf(word.toLowerCase()) >= 0) {
             num_coincidencias += 1;
           }
-
         }
-
         if (num_coincidencias >= words.length) {
           return item;
         }
-
-
       });
 
-      search_terms = this.order(search_terms);
-
-
-
+      //search_terms = this.order(search_terms);
       return search_terms;
     }
-
   }
+
+
 
 
   order(array: Array < any > ): Array < any > {

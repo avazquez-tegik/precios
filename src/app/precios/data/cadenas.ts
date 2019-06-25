@@ -3,7 +3,7 @@ export const cadenas: any[] = [{
       branches: [{
         name_control: 'soriana',
         title: 'Soriana',
-        value: true,
+        value: false,
         nombreServ: 'Soriana'
       }, {
         name_control: 'liverpool',
@@ -13,7 +13,7 @@ export const cadenas: any[] = [{
       },{
         name_control: 'coppel',
         title: 'Coppel',
-        value: true,
+        value: false,
         nombreServ: 'coppel'
       }, {
         name_control: 'sears',

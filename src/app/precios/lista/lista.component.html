@@ -4,11 +4,11 @@
 <div class="container-fluid">
   <nav class="navbar">
     <div class="form-inline my-2 my-lg-0">
-      <button class="btn btn-outline-primary" type="submit" (click)="compatir(template)">Compartir</button>
-      <button class="btn btn-outline-primary" type="submit" (click)="nuevoBusqueda()">Nueva Busqueda</button>
+      <button class="btn btn-outline-primary"  *ngIf= "show" type="submit" (click)="compatir(template)">Compartir</button>
+      <button class="btn btn-outline-primary" *ngIf= "show" type="submit" (click)="nuevoBusqueda()">Nueva Busqueda</button>
     </div>
   </nav>
-  <div class="row">
+  <div class="row" *ngIf="!show">
     <div class="col-md-12">
       <div class="input-group mb-5">
         <input type="text" class="form-control mr-sm-2" placeholder="Articulo" [(ngModel)]="text" />
@@ -18,7 +18,7 @@
           </button>
         </div>
       </div>
-      <div class="row">
+      <div class="row" *ngIf="!show">
         <div class="col-md-5 col-xs-12" [formGroup]="optionCadenasForm">
           <mk-box [isSolid]="true" boxColor="#fff" [isCollapsable]="true" [isRemovable]="false" header="Tiendas" [isCollapsed]="true">
             <mk-accordion-group [isMultiple]="false">
@@ -36,10 +36,10 @@
       </div>
     </div>
   </div>
-  <div class="container col-md-12">
+  <div class="container col-md-12" *ngIf="show">
     <hr />
-    <h5 p class="text-center" *ngIf="show">Filtros</h5>
-    <div class="row" *ngIf="show">
+    <h5 p class="text-center" >Filtros</h5>
+    <div class="row">
       <div class="col-md-5 col-xs-12">
         <mk-box [isSolid]="true" boxColor="#fff" [isCollapsable]="true" [isRemovable]="false" header="Tiendas" [isCollapsed]="true">
           <mk-accordion-group [isMultiple]="false" [formGroup]="optionCadenasForm">
@@ -55,14 +55,14 @@
         </mk-box>
       </div>
     </div>
-    <div class="row" *ngIf="show">
+    <div class="row" >
       <div class="col-md-5">
         <div class="form-group">
           <input type="text" class="form-control" name="filterPost" placeholder="Contiene..." [(ngModel)]="filterPost">
         </div>
       </div>
     </div>
-    <div class="row" *ngIf="show">
+    <div class="row" >
       <div class="col-md-5">
         <mk-box [isSolid]="true" boxColor="#fff" [isCollapsable]="true" [isRemovable]="false" header="Rango precios" [isCollapsed]="true">
           <div class="card">
@@ -92,7 +92,7 @@
   <p></p>
   <pagination-controls *ngIf="show" (pageChange)="p = $event"></pagination-controls>
   <div class="card-group" *ngIf="show">
-      <div class="col-md-3" *ngFor="let item of busqueda$ | async | filtros: { search: filterPost, min : filterPriceMin, max : filterPriceMax, tiendas: optionCadenasForm.value } | paginate: { itemsPerPage: 16, currentPage: p }">
+      <div class="col-md-3" *ngFor="let item of busqueda$ | async | filtros: { search0: text, search: filterPost, min : filterPriceMin, max : filterPriceMax, tiendas: optionCadenasForm.value } | paginate: { itemsPerPage: 16, currentPage: p }">
       <div class="card box">
         <img class="card-img-top img" [src]="item.imagen" />
         <img *ngIf="item.cadena == 'HEB'" src="assets/img/heb.png" class="center" />

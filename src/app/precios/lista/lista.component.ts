@@ -48,7 +48,7 @@ export class ListaComponent implements OnInit, OnDestroy {
   public optionCadenasForm: FormGroup;
 
   filterPost = '';
-  filterPriceMin = 0;
+  filterPriceMin = 100;
   filterPriceMax = 500000;
 
   carritoDoc: AngularFirestoreDocument < any > ;
@@ -86,11 +86,7 @@ export class ListaComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.show= false;
-
-
-
-
+    this.show = false;
     let user = this.authService.getUser().subscribe(user => {
       this.carritoDoc = this.afs.doc('carrito/' + user.id);
       this.user = user;
@@ -125,24 +121,24 @@ export class ListaComponent implements OnInit, OnDestroy {
 
 
   public async find() {
-
+    let intento = true;
     //Muestra el spinner
     this.spinner.show();
-    this.filterPost = '';
+    this.filterPost = this.text;
     let options: string[] = [];
 
     //Obtiene todos las tiendas que esta selecionada como true
     let listCadenas$ = this.getOptionsSelect();
 
-    //Inicializa o Crea un observador que ejecutara un monton de solicitudes 
+    //Inicializa o Crea un observador que ejecutara un monton de solicitudes
     //Se enviara un monton de solicitudes sin espera de respuesta a los lambdas
-    //El backend insertara en firebase 
+    //El backend insertara en firebase
 
     let search = listCadenas$.pipe(mergeMap(value =>
       this.searcher.search(value, this.text, 1, this.user.id)
     ));
 
-    //Borra todo el contenido para 
+    //Borra todo el contenido para
     let borrado = await this.searcher.borrar(this.user.id).toPromise();
 
     //Empieza a escuchar en firebase para ver cuales sera los valores que se insertara con el lambda
@@ -156,9 +152,9 @@ export class ListaComponent implements OnInit, OnDestroy {
 
     //Escucha los cambios en firebase y cuando ya tenga la primer registro, ocultara el spinner
     this.busqueda$.subscribe(resultado => {
-      if (resultado.length > 0) {
+      if (resultado.length > 0 ) {
         this.spinner.hide();
-        this.show=true;
+        this.show = true;
       }
 
     });
@@ -271,11 +267,11 @@ export class ListaComponent implements OnInit, OnDestroy {
   }
 
 
-
+ 
 
 
   public nuevoBusqueda() {
-
+    this.show = false;
     this.searcher.borrar(this.user.id).subscribe(item => {
 
     });

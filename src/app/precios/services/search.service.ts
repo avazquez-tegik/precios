@@ -17,8 +17,8 @@ export class SearchService {
 
 
   public search(cadena: any, texto: string, page, uuid: string): Observable < any > {
-    console.log("CADENA", cadena);
-
+    console.log('CADENA', cadena);
+    console.log('busqueda original', texto);
     var headers = new Headers({
       'Content-Type': 'application/json',
       'X-Amz-Invocation-Type': 'Event'
