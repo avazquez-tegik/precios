@@ -6,16 +6,51 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FiltrosPipe implements PipeTransform {
 
   transform(items: any[], arg: any): any {
-  
+
+
+    console.log(items);
+ //Outliers
+    let precio = 0.0;
+    let preciopromedio = 0.0;
+    let sumaprecios = 0.0;
+    let desvstd = 0.0;
+    let preciocuadrado = 0.0;
+    let preciocuadradosuma = 0.0;
+    let z = 0.0;
+    let filterItemsOutliers = [];
+    for (let i = 0; i < items.length; i++) {
+        precio = parseFloat(items[i].precio);
+        preciocuadrado = Math.pow(precio, 2);
+        preciocuadradosuma = preciocuadradosuma + preciocuadrado;
+        sumaprecios = sumaprecios + parseFloat(items[i].precio);
+        preciopromedio = sumaprecios / (i + 1);
+        if ( items[i].end === true) {
+            desvstd = Math.sqrt((preciocuadradosuma / (i + 1)) - Math.pow(preciopromedio, 2));
+            console.log('desvstd = : ' + desvstd);
+            for (let j = 0; j < items.length; j++) {
+                z = (items[j].precio - preciopromedio) / desvstd;
+                console.log(items[j].precio);
+                console.log('Z' + j + ' = : ' + z);
+                if (z >= -.6 && z <= 3 ) {
+                  filterItemsOutliers.push(items[j]);
+                }
+
+            }
+
+        }
+
+      }
+
+
+
     if (items) {
       let filterItemsTiendas = [];
-
-      for (let i = 0; i < items.length; i++) {
-        if (items[i]) {
+      for (let i = 0; i < filterItemsOutliers.length; i++) {
+        if (filterItemsOutliers[i]) {
           for (let atributo in arg.tiendas) {
             if (arg.tiendas[atributo] === true) {
-              if (items[i].value === atributo) {
-                filterItemsTiendas.push(items[i]);
+              if (filterItemsOutliers[i].value === atributo) {
+                filterItemsTiendas.push(filterItemsOutliers[i]);
               }
             }
           }
@@ -24,12 +59,12 @@ export class FiltrosPipe implements PipeTransform {
 
 
 
+
+
+
       let filterItems = [];
-
       for (let i = 0; i < filterItemsTiendas.length; i++) {
-
         if (filterItemsTiendas[i]) {
-
           let precio = parseFloat(filterItemsTiendas[i].precio);
           if (precio >= arg.min && precio < arg.max) {
             filterItems.push(filterItemsTiendas[i]);
@@ -38,15 +73,12 @@ export class FiltrosPipe implements PipeTransform {
         }
       }
 
-      filterItems = this.order(filterItems);
-      if (!arg.search) {
-        return filterItems;
-      }
+
 
 
 
       arg.search =  arg.search0 + ' ' +  arg.search;
-      let words: string[] = arg.search.split(' '); 
+      let words: string[] = arg.search.split(' ');
       let search_terms = filterItems.filter(item => {
         let titulo = item.titulo.toLowerCase().trim()
           .replace('Á', 'A')
@@ -81,8 +113,13 @@ export class FiltrosPipe implements PipeTransform {
         }
       });
 
-      //search_terms = this.order(search_terms);
+      filterItems = this.order(filterItems);
+      if (!arg.search) {
+        return ;
+      }
+      search_terms = this.order(search_terms);
       return search_terms;
+
     }
   }
 
