@@ -31,7 +31,7 @@ export class FiltrosPipe implements PipeTransform {
                 z = (items[j].precio - preciopromedio) / desvstd;
                 console.log(items[j].precio);
                 console.log('Z' + j + ' = : ' + z);
-                if (z >= -.6 && z <= 3 ) {
+                if ( (z >= -.6 && z <= 3)) {
                   filterItemsOutliers.push(items[j]);
                 }
 
@@ -66,7 +66,7 @@ export class FiltrosPipe implements PipeTransform {
       for (let i = 0; i < filterItemsTiendas.length; i++) {
         if (filterItemsTiendas[i]) {
           let precio = parseFloat(filterItemsTiendas[i].precio);
-          if (precio >= arg.min && precio < arg.max) {
+          if ((precio >= arg.min && precio < arg.max) ) {
             filterItems.push(filterItemsTiendas[i]);
           }
 

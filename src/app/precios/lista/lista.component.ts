@@ -33,6 +33,7 @@ export class ListaComponent implements OnInit, OnDestroy {
   public show: boolean;
   public tiendas: any;
   public filtroTiendas: any[];
+  public nb = false;
 
 
 
@@ -157,17 +158,17 @@ export class ListaComponent implements OnInit, OnDestroy {
         this.show = true;
       }
 
+      if (resultado.length === 0 ) {
+        this.show = false;
+
+      }
+
     });
 
     //Obtiene todos los filtros selecionado como true
     this.filtroTiendas = this.getTiendasIncluidas();
 
-
-
-
   }
-
-
 
   get articulosForm(): FormArray {
     return this.destacadoForm.get('articulos') as FormArray;
@@ -267,20 +268,19 @@ export class ListaComponent implements OnInit, OnDestroy {
   }
 
 
- 
+
 
 
   public nuevoBusqueda() {
     this.show = false;
     this.searcher.borrar(this.user.id).subscribe(item => {
-
     });
 
 
   }
 
 
-  public ngOnDestroy() {
+    public ngOnDestroy() {
     this.nuevoBusqueda();
   }
 
