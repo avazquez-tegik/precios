@@ -1,3 +1,4 @@
+
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
@@ -28,7 +29,7 @@ export class FiltrosPipe implements PipeTransform {
             desvstd = Math.sqrt((preciocuadradosuma / (i + 1)) - Math.pow(preciopromedio, 2));
             console.log('desvstd = : ' + desvstd);
             for (let j = 0; j < items.length; j++) {
-                z = (items[j].precio - preciopromedio) / desvstd;
+                z = (this.toNumber(items[j].precio) - preciopromedio) / desvstd;
                 console.log(items[j].precio);
                 console.log('Z' + j + ' = : ' + z);
                 if ( (z >= -.6 && z <= 3)) {
@@ -139,6 +140,17 @@ export class FiltrosPipe implements PipeTransform {
       }
     });
     return array;
+
+  }
+
+
+  toNumber(value: any){
+
+    if(typeof value === 'number'){
+      return value;
+    } else if(typeof value === 'string'){
+      return parseFloat(value);
+    }
 
   }
 }
