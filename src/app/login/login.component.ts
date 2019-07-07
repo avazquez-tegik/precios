@@ -10,20 +10,25 @@ import { AuthService } from '../core/services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(public afAuth: AngularFireAuth, private router: Router, private authService: AuthService) { }
+  constructor(public afAuth: AngularFireAuth, private router: Router, private authService: AuthService) {}
   public email = '';
   public password = '';
-  public isError = false;
   public error = '';
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onLogin(): void {
     this.authService.loginEmailUser(this.email, this.password)
       .then((res) => {
         this.onLoginRedirect();
-      }).catch(err => this.error = err.message
-        );
+      }).catch(err => {
+        if ('The email address is badly formatted.' == err.message) {
+          this.error = 'EL correo es incorrecto';
+        } else if ('The password is invalid or the user does not have a password.' == err.message) {
+          this.error = 'La contraseña es invalida o el usuario no tiene una contraseña';
+        } else
+          this.error = err.message;
+
+      });
   }
 
 

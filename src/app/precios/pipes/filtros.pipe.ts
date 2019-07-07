@@ -1,4 +1,3 @@
-
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
@@ -8,9 +7,15 @@ export class FiltrosPipe implements PipeTransform {
 
   transform(items: any[], arg: any): any {
 
+    console.log("ENTRO CON UN TOTAL DE ", items.length);
 
-    console.log(items);
- //Outliers
+
+    if (items == null) {
+      return [];
+    }
+
+
+    //Outliers
     let precio = 0.0;
     let preciopromedio = 0.0;
     let sumaprecios = 0.0;
@@ -20,28 +25,29 @@ export class FiltrosPipe implements PipeTransform {
     let z = 0.0;
     let filterItemsOutliers = [];
     for (let i = 0; i < items.length; i++) {
-        precio = parseFloat(items[i].precio);
-        preciocuadrado = Math.pow(precio, 2);
-        preciocuadradosuma = preciocuadradosuma + preciocuadrado;
-        sumaprecios = sumaprecios + parseFloat(items[i].precio);
-        preciopromedio = sumaprecios / (i + 1);
-        if ( items[i].end === true) {
-            desvstd = Math.sqrt((preciocuadradosuma / (i + 1)) - Math.pow(preciopromedio, 2));
-            console.log('desvstd = : ' + desvstd);
-            for (let j = 0; j < items.length; j++) {
-                z = (this.toNumber(items[j].precio) - preciopromedio) / desvstd;
-                console.log(items[j].precio);
-                console.log('Z' + j + ' = : ' + z);
-                if ( (z >= -.6 && z <= 3)) {
-                  filterItemsOutliers.push(items[j]);
-                }
-
-            }
+      precio = parseFloat(items[i].precio);
+      preciocuadrado = Math.pow(precio, 2);
+      preciocuadradosuma = preciocuadradosuma + preciocuadrado;
+      sumaprecios = sumaprecios + parseFloat(items[i].precio);
+      preciopromedio = sumaprecios / (i + 1);
+      if (items[i].end === true) {
+        desvstd = Math.sqrt((preciocuadradosuma / (i + 1)) - Math.pow(preciopromedio, 2));
+        //console.log('desvstd = : ' + desvstd);
+        for (let j = 0; j < items.length; j++) {
+          z = (this.toNumber(items[j].precio) - preciopromedio) / desvstd;
+          //console.log(items[j].precio);
+          //console.log('Z' + j + ' = : ' + z);
+          if ((z >= -.6 && z <= 3)) {
+            filterItemsOutliers.push(items[j]);
+          }
 
         }
 
       }
 
+    }
+
+    console.log("filterItemsOutliers ", filterItemsOutliers.length);
 
 
     if (items) {
@@ -60,6 +66,7 @@ export class FiltrosPipe implements PipeTransform {
 
 
 
+      console.log("filterItemsTiendas ", filterItemsTiendas.length);
 
 
 
@@ -67,7 +74,7 @@ export class FiltrosPipe implements PipeTransform {
       for (let i = 0; i < filterItemsTiendas.length; i++) {
         if (filterItemsTiendas[i]) {
           let precio = parseFloat(filterItemsTiendas[i].precio);
-          if ((precio >= arg.min && precio < arg.max) ) {
+          if ((precio >= arg.min && precio < arg.max)) {
             filterItems.push(filterItemsTiendas[i]);
           }
 
@@ -75,36 +82,19 @@ export class FiltrosPipe implements PipeTransform {
       }
 
 
+      console.log("filterItems ", filterItems.length);
 
 
 
-      arg.search =  arg.search0 + ' ' +  arg.search;
-      let words: string[] = arg.search.split(' ');
+      let search = arg.search;
+      let words: string[] = search.split(' ');
+
       let search_terms = filterItems.filter(item => {
-        let titulo = item.titulo.toLowerCase().trim()
-          .replace('Á', 'A')
-          .replace('É', 'E')
-          .replace('Í', 'I')
-          .replace('Ó', 'O')
-          .replace('Ú', 'U')
-          .replace('á', 'a')
-          .replace('é', 'e')
-          .replace('í', 'i')
-          .replace('ó', 'o')
-          .replace('ú', 'u');
+        let titulo = this.removeAccents(item.titulo);
+
         let num_coincidencias = 0;
         for (let word of words) {
-          word = word.toLowerCase().trim()
-            .replace('Á', 'A')
-            .replace('É', 'E')
-            .replace('Í', 'I')
-            .replace('Ó', 'O')
-            .replace('Ú', 'U')
-            .replace('á', 'a')
-            .replace('é', 'e')
-            .replace('í', 'i')
-            .replace('ó', 'o')
-            .replace('ú', 'u');
+          word = this.removeAccents(word)
           if (titulo.toLowerCase().indexOf(word.toLowerCase()) >= 0) {
             num_coincidencias += 1;
           }
@@ -114,14 +104,31 @@ export class FiltrosPipe implements PipeTransform {
         }
       });
 
-      filterItems = this.order(filterItems);
-      if (!arg.search) {
-        return ;
+      if (!search) {
+        return;
       }
       search_terms = this.order(search_terms);
+
+      console.log("REGRESA UN TOTAL DE  ", search_terms.length)
       return search_terms;
 
     }
+  }
+
+  public removeAccents(value: string): string {
+    value = value.toLowerCase().trim()
+      .replace('Á', 'A')
+      .replace('É', 'E')
+      .replace('Í', 'I')
+      .replace('Ó', 'O')
+      .replace('Ú', 'U')
+      .replace('á', 'a')
+      .replace('é', 'e')
+      .replace('í', 'i')
+      .replace('ó', 'o')
+      .replace('ú', 'u');
+
+    return value;
   }
 
 
@@ -144,11 +151,11 @@ export class FiltrosPipe implements PipeTransform {
   }
 
 
-  toNumber(value: any){
+  toNumber(value: any) {
 
-    if(typeof value === 'number'){
+    if (typeof value === 'number') {
       return value;
-    } else if(typeof value === 'string'){
+    } else if (typeof value === 'string') {
       return parseFloat(value);
     }
 

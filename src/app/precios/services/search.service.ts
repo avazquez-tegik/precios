@@ -27,9 +27,9 @@ export class SearchService {
     var url = this.url + cadena + "?value=" + encodeURI(texto) + "&page=" + page + "&uuid="  + uuid;
 
     return this.http.get(encodeURI(url), { headers: headers }).map(res => {
-      return res.json();
+      return res;
 
-    });;
+    });
   }
 
 

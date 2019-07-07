@@ -4,18 +4,16 @@
 <div class="container-fluid">
   <nav class="navbar">
     <div class="form-inline my-2 my-lg-0">
-      <button class="btn btn-outline-primary"  *ngIf= "show" type="submit" (click)="compatir(template)">Compartir</button>
-      <button class="btn btn-outline-primary" *ngIf= "show" type="submit" (click)="nuevoBusqueda()">Nueva Busqueda</button>
+      <button class="btn btn-outline-primary" *ngIf="show" type="submit" (click)="compatir(template)">Compartir</button>
+      <button class="btn btn-outline-primary" *ngIf="show" type="submit" (click)="nuevoBusqueda()">Nueva Busqueda</button>
     </div>
   </nav>
   <div class="row" *ngIf="!show">
     <div class="col-md-12">
-      <div class="input-group mb-5">
-        <input type="text" class="form-control mr-sm-2" placeholder="Articulo" [(ngModel)]="text" />
-        <div class="input-group-append">
-          <button class="btn btn-outline-primary" (click)="find()">
-            Buscar ...
-          </button>
+      <div class="mb-5">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Articulo" [(ngModel)]="text" />
+          <span class="input-group-addon" id="basic-addon2" (click)="find()">Buscar</span>
         </div>
       </div>
       <div class="row" *ngIf="!show">
@@ -23,12 +21,12 @@
           <mk-box [isSolid]="true" boxColor="#fff" [isCollapsable]="true" [isRemovable]="false" header="Tiendas" [isCollapsed]="true">
             <mk-accordion-group [isMultiple]="false">
               <mk-accordion [header]="c.category" *ngFor="let c of options">
-                <label class="form-check" *ngFor="let branch of c.branches">
-                  <input class="form-check-input" type="checkbox" [formControlName]="branch.name_control" />
-                  <span class="form-check-label">
+                <div class="checkbox" *ngFor="let branch of c.branches">
+                  <label>
+                    <input class="checkbox" type="checkbox" [formControlName]="branch.name_control" />
                     {{branch.title}}
-                  </span>
-                </label>
+                  </label>
+                  </div>
               </mk-accordion>
             </mk-accordion-group>
           </mk-box>
@@ -38,7 +36,7 @@
   </div>
   <div class="container col-md-12" *ngIf="show">
     <hr />
-    <h5 p class="text-center" >Filtros</h5>
+    <h5 p class="text-center">Filtros</h5>
     <div class="row">
       <div class="col-md-5 col-xs-12">
         <mk-box [isSolid]="true" boxColor="#fff" [isCollapsable]="true" [isRemovable]="false" header="Tiendas" [isCollapsed]="true">
@@ -55,14 +53,14 @@
         </mk-box>
       </div>
     </div>
-    <div class="row" >
+    <div class="row">
       <div class="col-md-5">
-        <div class="form-group">
-          <input type="text" class="form-control" name="filterPost" placeholder="Contiene..." [(ngModel)]="filterPost">
+        <div class="form-group" [formGroup]="contieneForm">
+          <input type="text" class="form-control" name="filterPost" placeholder="Contiene..."  id="contiene"  formControlName="term">
         </div>
       </div>
     </div>
-    <div class="row" >
+    <div class="row">
       <div class="col-md-5">
         <mk-box [isSolid]="true" boxColor="#fff" [isCollapsable]="true" [isRemovable]="false" header="Rango precios" [isCollapsed]="true">
           <div class="card">
@@ -92,9 +90,9 @@
   <p></p>
   <pagination-controls *ngIf="show" (pageChange)="p = $event"></pagination-controls>
   <div class="card-group" *ngIf="show">
-      <div class="col-md-3" *ngFor="let item of busqueda$ | async | filtros: { search0: text, search: filterPost, min : filterPriceMin, max : filterPriceMax, tiendas: optionCadenasForm.value } | paginate: { itemsPerPage: 16, currentPage: p }">
+    <div class="col-md-3" *ngFor="let item of busqueda  | filtros: { search0: text, search: contieneForm.value.term, min : filterPriceMin, max : filterPriceMax, tiendas: optionCadenasForm.value } | paginate: { itemsPerPage: 16, currentPage: p }">
       <div class="card box">
-        <img class="card-img-top img" [src]="item.imagen" />
+        <img class="card-img-top img product_images" [src]="item.imagen" />
         <img *ngIf="item.cadena == 'HEB'" src="assets/img/heb.png" class="center" />
         <img *ngIf="item.cadena == 'Soriana'" src="assets/img/soriana.png" class="center" />
         <img *ngIf="item.cadena == 'liverpool'" src="assets/img/liverpool.png" class="center" />
@@ -163,7 +161,7 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <img class="card-img-top img" src="{{ item.value.imagen }}" />
+                <img class="card-img-top img" style="width: 200px; height: 200px"src="{{ item.value.imagen }}" />
               </div>
             </div>
           </li>

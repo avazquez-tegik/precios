@@ -3,8 +3,8 @@ import { SearchService } from '../services/search.service';
 import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { of , Observable } from 'rxjs';
-import { mergeMap, map } from 'rxjs/operators';
+import { of , Observable, fromEvent } from 'rxjs';
+import { mergeMap, map, filter } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Articulo } from '../../core/models/articulo';
 import { AuthService } from '../../core/services/auth.service';
@@ -43,19 +43,22 @@ export class ListaComponent implements OnInit, OnDestroy {
     articulos: new FormArray([])
   });
 
+  public contieneForm: FormGroup = new FormGroup({
+    term: new FormControl(),
+  });
+
 
   public items$: Observable < any[] > ;
 
   public optionCadenasForm: FormGroup;
 
-  filterPost = '';
   filterPriceMin = 100;
   filterPriceMax = 500000;
 
   carritoDoc: AngularFirestoreDocument < any > ;
   destacadosDoc: AngularFirestoreDocument < any > ;
 
-  busqueda$: Observable < any[] > ;
+  busqueda: any[];
 
   mi_carrito: any = {};
   destacados: any = {};
@@ -99,6 +102,22 @@ export class ListaComponent implements OnInit, OnDestroy {
       })
 
 
+   /*   const changeContiene$ = this.contieneForm.get('term').valueChanges;
+
+      //Cuando ocurre un cambio en contiene, se vuelve a filtrar
+      changeContiene$.subscribe(value => {
+        this.busqueda = this.fp.transform(this.busqueda, {
+          search0: this.text,
+          search: value,
+          min: this.filterPriceMin,
+          max: this.filterPriceMax,
+          tiendas: this.optionCadenasForm.value
+        });
+      });*/
+
+
+
+
     });
 
 
@@ -122,10 +141,18 @@ export class ListaComponent implements OnInit, OnDestroy {
 
 
   public async find() {
+
     let intento = true;
+
     //Muestra el spinner
     this.spinner.show();
-    this.filterPost = this.text;
+
+
+//Colocar el valor por defecto en el contiene
+    this.contieneForm.patchValue({
+      term: this.text
+    });
+
     let options: string[] = [];
 
     //Obtiene todos las tiendas que esta selecionada como true
@@ -135,7 +162,7 @@ export class ListaComponent implements OnInit, OnDestroy {
     //Se enviara un monton de solicitudes sin espera de respuesta a los lambdas
     //El backend insertara en firebase
 
-    let search = listCadenas$.pipe(mergeMap(value =>
+    let search$ = listCadenas$.pipe(mergeMap(value =>
       this.searcher.search(value, this.text, 1, this.user.id)
     ));
 
@@ -143,27 +170,39 @@ export class ListaComponent implements OnInit, OnDestroy {
     let borrado = await this.searcher.borrar(this.user.id).toPromise();
 
     //Empieza a escuchar en firebase para ver cuales sera los valores que se insertara con el lambda
-    this.busqueda$ = this.afs.collection('busqueda/' + this.user.id + "/resultados").valueChanges();
+    const busqueda$ = this.afs.collection('busqueda/' + this.user.id + "/resultados", ref => ref.orderBy('created_at'))
+      .valueChanges().pipe(filter((lista: any[]) => {
+        if (lista.length)
+          if (lista[lista.length - 1]['end']) {
+            console.log("encontro end");
+            return true;
+
+          }
+        return false;
+      }));
 
     //Envia todas la solicitudes al mismo tiempo
-    search.subscribe(res => {
-
-    });
+    let enviarRequest = await search$.toPromise();
 
 
     //Escucha los cambios en firebase y cuando ya tenga la primer registro, ocultara el spinner
-    this.busqueda$.subscribe(resultado => {
-      if (resultado.length > 0 ) {
-        this.spinner.hide();
-        this.show = true;
-      }
+    busqueda$.subscribe(items => {
+      console.log(items);
 
-      if (resultado.length === 0 ) {
-        this.show = false;
+      this.busqueda = items;
+      this.show = true;
+      this.spinner.hide();
 
-      }
+      /*this.busqueda = this.fp.transform(this.busqueda, {
+        search0: this.text,
+        search: this.contieneForm.value.term,
+        min: this.filterPriceMin,
+        max: this.filterPriceMax,
+        tiendas: this.optionCadenasForm.value
+      });*/
 
-    });
+    })
+
 
     //Obtiene todos los filtros selecionado como true
     this.filtroTiendas = this.getTiendasIncluidas();
@@ -209,7 +248,7 @@ export class ListaComponent implements OnInit, OnDestroy {
     this.modalRef = this.modalService.show(template);
 
     let arts = this.fp.transform(this.articulos, {
-      search: this.filterPost,
+      search: this.contieneForm.value.term,
       min: this.filterPriceMin,
       max: this.filterPriceMax
     });
@@ -273,14 +312,13 @@ export class ListaComponent implements OnInit, OnDestroy {
 
   public nuevoBusqueda() {
     this.show = false;
-    this.searcher.borrar(this.user.id).subscribe(item => {
-    });
+    this.searcher.borrar(this.user.id).subscribe(item => {});
 
 
   }
 
 
-    public ngOnDestroy() {
+  public ngOnDestroy() {
     this.nuevoBusqueda();
   }
 
