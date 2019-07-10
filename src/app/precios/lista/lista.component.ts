@@ -142,57 +142,48 @@ export class ListaComponent implements OnInit, OnDestroy {
 
   public async find() {
 
-    let intento = true;
-
-    //Muestra el spinner
+    // Muestra el spinner
     this.spinner.show();
 
 
-//Colocar el valor por defecto en el contiene
+// Colocar el valor por defecto en el contiene
     this.contieneForm.patchValue({
       term: this.text
     });
 
     let options: string[] = [];
 
-    //Obtiene todos las tiendas que esta selecionada como true
+    // Obtiene todos las tiendas que esta selecionada como true
     let listCadenas$ = this.getOptionsSelect();
 
-    //Inicializa o Crea un observador que ejecutara un monton de solicitudes
-    //Se enviara un monton de solicitudes sin espera de respuesta a los lambdas
-    //El backend insertara en firebase
+    // Inicializa o Crea un observador que ejecutara un monton de solicitudes
+    // Se enviara un monton de solicitudes sin espera de respuesta a los lambdas
+    // El backend insertara en firebase
 
     let search$ = listCadenas$.pipe(mergeMap(value =>
       this.searcher.search(value, this.text, 1, this.user.id)
     ));
 
-    //Borra todo el contenido para
+    // Borra todo el contenido para
     let borrado = await this.searcher.borrar(this.user.id).toPromise();
 
-    //Empieza a escuchar en firebase para ver cuales sera los valores que se insertara con el lambda
+    // Empieza a escuchar en firebase para ver cuales sera los valores que se insertara con el lambda
     const busqueda$ = this.afs.collection('busqueda/' + this.user.id + "/resultados", ref => ref.orderBy('created_at'))
-      .valueChanges().pipe(filter((lista: any[]) => {
-        if (lista.length)
-          if (lista[lista.length - 1]['end']) {
-            console.log("encontro end");
-            return true;
+      .valueChanges();
 
-          }
-        return false;
-      }));
-
-    //Envia todas la solicitudes al mismo tiempo
+    // Envia todas la solicitudes al mismo tiempo
     let enviarRequest = await search$.toPromise();
 
 
-    //Escucha los cambios en firebase y cuando ya tenga la primer registro, ocultara el spinner
+    // Escucha los cambios en firebase y cuando ya tenga la primer registro, ocultara el spinner
     busqueda$.subscribe(items => {
-      console.log(items);
-
       this.busqueda = items;
-      this.show = true;
+      if (items.length > 0 ) {
       this.spinner.hide();
-
+      this.show = true;
+      } else {
+        this.show = false;
+      }
       /*this.busqueda = this.fp.transform(this.busqueda, {
         search0: this.text,
         search: this.contieneForm.value.term,
@@ -201,10 +192,10 @@ export class ListaComponent implements OnInit, OnDestroy {
         tiendas: this.optionCadenasForm.value
       });*/
 
-    })
+    });
 
 
-    //Obtiene todos los filtros selecionado como true
+    // Obtiene todos los filtros selecionado como true
     this.filtroTiendas = this.getTiendasIncluidas();
 
   }
@@ -224,9 +215,6 @@ export class ListaComponent implements OnInit, OnDestroy {
 
     this.carritoDoc.set(this.mi_carrito, { merge: true });
 
-
-
-
   }
 
 
@@ -239,8 +227,6 @@ export class ListaComponent implements OnInit, OnDestroy {
     this.destacados[id] = articulo;
 
     this.destacadosDoc.set(this.destacados, { merge: true });
-
-
 
   }
 
@@ -261,7 +247,6 @@ export class ListaComponent implements OnInit, OnDestroy {
       articulo['selected'] = false;
       this.articulosForm.push(this.fb.group(articulo));
     }
-
 
   }
 
@@ -285,10 +270,7 @@ export class ListaComponent implements OnInit, OnDestroy {
     this.destacadosDoc.set(destacado, { merge: true });
     this.modalRef.hide();
 
-
-
   }
-
 
   public getTiendasIncluidas() {
     let tiendasIncluidas: any[] = [];
@@ -307,13 +289,9 @@ export class ListaComponent implements OnInit, OnDestroy {
   }
 
 
-
-
-
   public nuevoBusqueda() {
     this.show = false;
     this.searcher.borrar(this.user.id).subscribe(item => {});
-
 
   }
 

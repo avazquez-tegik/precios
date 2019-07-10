@@ -7,11 +7,16 @@ export class FiltrosPipe implements PipeTransform {
 
   transform(items: any[], arg: any): any {
 
-    console.log("ENTRO CON UN TOTAL DE ", items.length);
 
 
     if (items == null) {
       return [];
+    }
+
+
+    for (let i = 0; i < items.length; i++) {
+      items[i]["entro"] = false;
+
     }
 
 
@@ -32,23 +37,17 @@ export class FiltrosPipe implements PipeTransform {
       preciopromedio = sumaprecios / (i + 1);
       if (items[i].end === true) {
         desvstd = Math.sqrt((preciocuadradosuma / (i + 1)) - Math.pow(preciopromedio, 2));
-        //console.log('desvstd = : ' + desvstd);
         for (let j = 0; j < items.length; j++) {
-          z = (this.toNumber(items[j].precio) - preciopromedio) / desvstd;
-          //console.log(items[j].precio);
-          //console.log('Z' + j + ' = : ' + z);
-          if ((z >= -.6 && z <= 3)) {
-            filterItemsOutliers.push(items[j]);
+          if (items[j].entro === false) {
+            z = (this.toNumber(items[j].precio) - preciopromedio) / desvstd;
+            if ((z >= -3 && z <= 3)) {
+              filterItemsOutliers.push(items[j]);
+              items[j]['entro'] = true;
+            }
           }
-
         }
-
       }
-
     }
-
-    console.log("filterItemsOutliers ", filterItemsOutliers.length);
-
 
     if (items) {
       let filterItemsTiendas = [];
@@ -65,11 +64,6 @@ export class FiltrosPipe implements PipeTransform {
       }
 
 
-
-      console.log("filterItemsTiendas ", filterItemsTiendas.length);
-
-
-
       let filterItems = [];
       for (let i = 0; i < filterItemsTiendas.length; i++) {
         if (filterItemsTiendas[i]) {
@@ -80,9 +74,6 @@ export class FiltrosPipe implements PipeTransform {
 
         }
       }
-
-
-      console.log("filterItems ", filterItems.length);
 
 
 
@@ -109,7 +100,7 @@ export class FiltrosPipe implements PipeTransform {
       }
       search_terms = this.order(search_terms);
 
-      console.log("REGRESA UN TOTAL DE  ", search_terms.length)
+
       return search_terms;
 
     }
@@ -134,7 +125,7 @@ export class FiltrosPipe implements PipeTransform {
 
 
 
-  order(array: Array < any > ): Array < any > {
+  order(array: Array<any>): Array<any> {
     if (!array || array === undefined || array.length === 0) { return []; }
 
     array.sort((a: any, b: any) => {
