@@ -5,7 +5,8 @@
   <nav class="navbar">
     <div class="form-inline my-2 my-lg-0">
       <button class="btn btn-outline-primary" *ngIf="show" type="submit" (click)="compatir(template)">Compartir</button>
-      <button class="btn btn-outline-primary" *ngIf="show" type="submit" (click)="nuevoBusqueda()">Nueva Busqueda</button>
+      <button class="btn btn-outline-primary" *ngIf="show" type="submit" (click)="nuevoBusqueda()">Nueva
+        Busqueda</button>
     </div>
   </nav>
   <div class="row" *ngIf="!show">
@@ -16,9 +17,12 @@
           <span class="input-group-addon" id="basic-addon2" (click)="find()">Buscar</span>
         </div>
       </div>
+      <hr />
+
       <div class="row" *ngIf="!show">
         <div class="col-md-5 col-xs-12" [formGroup]="optionCadenasForm">
-          <mk-box [isSolid]="true" boxColor="#fff" [isCollapsable]="true" [isRemovable]="false" header="Tiendas" [isCollapsed]="true">
+          <mk-box [isSolid]="true" boxColor="#fff" [isCollapsable]="true" [isRemovable]="false" header="Tiendas"
+            [isCollapsed]="true">
             <mk-accordion-group [isMultiple]="false">
               <mk-accordion [header]="c.category" *ngFor="let c of options">
                 <div class="checkbox" *ngFor="let branch of c.branches">
@@ -26,7 +30,7 @@
                     <input class="checkbox" type="checkbox" [formControlName]="branch.name_control" />
                     {{branch.title}}
                   </label>
-                  </div>
+                </div>
               </mk-accordion>
             </mk-accordion-group>
           </mk-box>
@@ -34,12 +38,17 @@
       </div>
     </div>
   </div>
+
+
+
+
   <div class="container col-md-12" *ngIf="show">
     <hr />
     <h5 p class="text-center">Filtros</h5>
     <div class="row">
       <div class="col-md-5 col-xs-12">
-        <mk-box [isSolid]="true" boxColor="#fff" [isCollapsable]="true" [isRemovable]="false" header="Tiendas" [isCollapsed]="true">
+        <mk-box [isSolid]="true" boxColor="#fff" [isCollapsable]="true" [isRemovable]="false" header="Tiendas"
+          [isCollapsed]="true">
           <mk-accordion-group [isMultiple]="false" [formGroup]="optionCadenasForm">
             <mk-accordion header="Refine busqueda por Tiendas">
               <label class="form-check" *ngFor="let filtroTienda of filtroTiendas">
@@ -56,13 +65,15 @@
     <div class="row">
       <div class="col-md-5">
         <div class="form-group" [formGroup]="contieneForm">
-          <input type="text" class="form-control" name="filterPost" placeholder="Contiene..."  id="contiene"  formControlName="term">
+          <input type="text" class="form-control" name="filterPost" placeholder="Contiene..." id="contiene"
+            formControlName="term">
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col-md-5">
-        <mk-box [isSolid]="true" boxColor="#fff" [isCollapsable]="true" [isRemovable]="false" header="Rango precios" [isCollapsed]="true">
+        <mk-box [isSolid]="true" boxColor="#fff" [isCollapsable]="true" [isRemovable]="false" header="Rango precios"
+          [isCollapsed]="true">
           <div class="card">
             <article class="card-group-item ">
               <div class="card-body">
@@ -89,52 +100,61 @@
   <hr />
   <p></p>
   <pagination-controls *ngIf="show" (pageChange)="p = $event"></pagination-controls>
-  <div class="card-group" *ngIf="show">
-    <div class="col-md-3" *ngFor="let item of busqueda  | filtros: { search0: text, search: contieneForm.value.term, min : filterPriceMin, max : filterPriceMax, tiendas: optionCadenasForm.value } | paginate: { itemsPerPage: 16, currentPage: p }">
-      <div class="card box">
-        <img class="card-img-top img product_images" [src]="item.imagen" />
-        <img *ngIf="item.cadena == 'HEB'" src="assets/img/heb.png" class="center" />
-        <img *ngIf="item.cadena == 'Soriana'" src="assets/img/soriana.png" class="center" />
-        <img *ngIf="item.cadena == 'liverpool'" src="assets/img/liverpool.png" class="center" />
-        <img *ngIf="item.cadena == 'sears'" src="assets/img/sears.jpeg" class="center" />
-        <img *ngIf="item.cadena == 'bestbuy'" src="assets/img/bestbuy.png" class="center" />
-        <img *ngIf="item.cadena == 'sanborns'" src="assets/img/sanborns.png" class="center" />
-        <img *ngIf="item.cadena == 'Farmacias Del Ahorro'" src="assets/img/farmacias_del_ahorro.jpg" class="center" />
-        <img *ngIf="item.cadena == 'WalMart' || item.cadena == 'SuperWalMart'" src="assets/img/walmart.png" class="center" />
-        <img *ngIf="item.cadena == 'HomeDepot'" src="assets/img/homedepot.png" class="center" />
-        <img *ngIf="item.cadena == 'Pcel'" src="assets/img/pcel.png" class="center" />
-        <img *ngIf="item.cadena == 'Costco'" src="assets/img/costco.png" class="center" />
-        <img *ngIf="item.cadena == 'Superama'" src="assets/img/superama.png" class="center" />
-        <img *ngIf="item.cadena == 'DelSol'" src="assets/img/del_sol.png" class="center" />
-        <img *ngIf="item.cadena == 'officedepot'" src="assets/img/office_depot.png" class="center" />
-        <img *ngIf="item.cadena == 'Office Max'" src="assets/img/officemax.jpg" class="center" />
-        <img *ngIf="item.cadena == 'BodegaAurrera'" src="assets/img/bodega_aurrera.png" class="center" />
-        <img *ngIf="item.cadena == 'PalacioHierro'" src="assets/img/palacio_hierro.jpeg" class="center" />
-        <img *ngIf="item.cadena == 'Marti'" src="assets/img/marti.jpeg" class="center" />
-        <img *ngIf="item.cadena == 'InnovaSport'" src="assets/img/innova_sport.png" class="center" />
-        <img *ngIf="item.cadena == 'Chedraui'" src="assets/img/chedraui.png" class="center" />
-        <div class="card-body">
-          <h5 class="card-title">{{ item.titulo }}</h5>
-        </div>
-        <h4 class="card-title" class="text-center">
-          <strong> {{ item.precio | currency }}</strong>
-        </h4>
-        <a href="{{ item.enlace_informacion }}" target="_blank">
-          <button type="button" class="btnx btn-primary btn-block">
-            Comprar
-          </button>
-        </a>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <div class="form-inline my-2 my-lg-0">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="agregarCarrito(item)">Agregar Carrito</button>
+  <div class="card-group wrap" *ngIf="show">
+
+  <div *ngFor="let item of busqueda  | filtros: { search0: text, search: contieneForm.value.term, min : filterPriceMin, max : filterPriceMax, tiendas: optionCadenasForm.value } | paginate: { itemsPerPage: 20, currentPage: p }">
+
+      <div class="product-card">
+          <div class="product-tumb">
+            <img [src]="item.imagen" alt="">
           </div>
-        </nav>
-      </div>
-    </div>
-  </div>
-  <p></p>
-  <pagination-controls *ngIf="show" (pageChange)="p = $event"></pagination-controls>
+          <img *ngIf="item.cadena == 'HEB'" src="assets/img/heb.png" class="center" />
+          <img *ngIf="item.cadena == 'Soriana'" src="assets/img/soriana.png" class="center" />
+          <img *ngIf="item.cadena == 'liverpool'" src="assets/img/liverpool.png" class="center" />
+          <img *ngIf="item.cadena == 'sears'" src="assets/img/sears.jpeg" class="center" />
+          <img *ngIf="item.cadena == 'bestbuy'" src="assets/img/bestbuy.png" class="center" />
+          <img *ngIf="item.cadena == 'sanborns'" src="assets/img/sanborns.png" class="center" />
+          <img *ngIf="item.cadena == 'Farmacias Del Ahorro'" src="assets/img/farmacias_del_ahorro.jpg" class="center" />
+          <img *ngIf="item.cadena == 'WalMart' || item.cadena == 'SuperWalMart'" src="assets/img/walmart.png"class="center" />
+          <img *ngIf="item.cadena == 'HomeDepot'" src="assets/img/homedepot.png" class="center" />
+          <img *ngIf="item.cadena == 'Pcel'" src="assets/img/pcel.png" class="center" />
+          <img *ngIf="item.cadena == 'Costco'" src="assets/img/costco.png" class="center" />
+          <img *ngIf="item.cadena == 'Superama'" src="assets/img/superama.png" class="center" />
+          <img *ngIf="item.cadena == 'DelSol'" src="assets/img/del_sol.png" class="center" />
+          <img *ngIf="item.cadena == 'officedepot'" src="assets/img/office_depot.png" class="center" />
+          <img *ngIf="item.cadena == 'Office Max'" src="assets/img/officemax.jpg" class="center" />
+          <img *ngIf="item.cadena == 'BodegaAurrera'" src="assets/img/bodega_aurrera.png" class="center" />
+          <img *ngIf="item.cadena == 'PalacioHierro'" src="assets/img/palacio_hierro.jpeg" class="center" />
+          <img *ngIf="item.cadena == 'Marti'" src="assets/img/marti.jpeg" class="center" />
+          <img *ngIf="item.cadena == 'InnovaSport'" src="assets/img/innova_sport.png" class="center" />
+          <img *ngIf="item.cadena == 'Chedraui'" src="assets/img/chedraui.png" class="center" />
+          <div class="product-details">
+           <h4><a href="{{ item.enlace_informacion }}" target="_blank">{{item.cadena}}</a></h4>
+            <p>{{ item.titulo }}</p>
+            <div class="product-bottom-details">
+              <div class="product-price">{{ item.precio | currency }}</div>
+              <a href="{{ item.enlace_informacion }}" target="_blank">
+              <button class="buttonz center">Comprar</button>
+            </a>
+
+              <div class="product-links">
+                <a href=""><i class="fa fa-heart"></i></a>
+                <a (click)="agregarCarrito(item)"><i class="fa fa-shopping-cart"></i></a>
+                <a href="{{ item.enlace_informacion }}" target="_blank"><i class="fa fa-shopping-bag"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
 </div>
+
+
+
+</div>
+<p></p>
+<pagination-controls *ngIf="show" (pageChange)="p = $event"></pagination-controls>
 <ng-template #template>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Compartir</h4>
@@ -146,7 +166,8 @@
     <div>
       <div class="form-group">
         <label for="exampleInputEmail1">Etiqueta</label>
-        <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Etiqueta" formControlName="etiqueta">
+        <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Etiqueta"
+          formControlName="etiqueta">
       </div>
       <div class="form-group" formArrayName="articulos">
         <ul class="list-group">
@@ -161,7 +182,7 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <img class="card-img-top img" style="width: 200px; height: 200px"src="{{ item.value.imagen }}" />
+                <img class="card-img-top img" style="width: 200px; height: 200px" src="{{ item.value.imagen }}" />
               </div>
             </div>
           </li>
@@ -171,3 +192,5 @@
     </div>
   </div>
 </ng-template>
+
+
