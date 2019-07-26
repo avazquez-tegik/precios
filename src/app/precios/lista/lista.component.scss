@@ -4,7 +4,7 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 20%;
+  width: 15%;
 }
 
 
@@ -18,6 +18,14 @@
   border-radius: 10px;
 }
 
+.logo_images
+{
+  width: 110px;
+  height: 50px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 .product_images
 {
@@ -117,7 +125,7 @@
     width: 350px;
     position: relative;
     margin: 10px;
-    height: 590px;
+    height: 100%;
     background: #ffffff;
     border-radius: 15px;
 	-webkit-transition: 200ms ease-in-out;
