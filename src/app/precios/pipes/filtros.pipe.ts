@@ -1,9 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 @Pipe({
-  name: 'filtros'
+  name: 'filtros',
+
 })
 export class FiltrosPipe implements PipeTransform {
+
 
   transform(items: any[], arg: any): any {
 
@@ -20,6 +22,7 @@ export class FiltrosPipe implements PipeTransform {
     }
 
 
+
     //Outliers
     let precio = 0.0;
     let preciopromedio = 0.0;
@@ -29,6 +32,7 @@ export class FiltrosPipe implements PipeTransform {
     let preciocuadradosuma = 0.0;
     let z = 0.0;
     let filterItemsOutliers = [];
+
     for (let i = 0; i < items.length; i++) {
       precio = parseFloat(items[i].precio);
       preciocuadrado = Math.pow(precio, 2);
@@ -48,6 +52,8 @@ export class FiltrosPipe implements PipeTransform {
         }
       }
     }
+
+
 
     if (items) {
       let filterItemsTiendas = [];

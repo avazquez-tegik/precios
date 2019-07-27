@@ -112,7 +112,7 @@ export const cadenas: any[] = [{
       branches: [{
         name_control: 'bestbuy',
         title: 'BestBuy',
-        value: false,
+        value: true,
         nombreServ: 'bestbuy'
       }, {
         name_control: 'pcel',

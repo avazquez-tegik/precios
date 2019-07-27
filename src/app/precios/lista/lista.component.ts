@@ -99,7 +99,7 @@ export class ListaComponent implements OnInit, OnDestroy {
 
       this.carritoDoc.valueChanges().subscribe(carrito => {
         this.mi_carrito = carrito;
-      })
+      });
 
 
    /*   const changeContiene$ = this.contieneForm.get('term').valueChanges;
@@ -179,8 +179,12 @@ export class ListaComponent implements OnInit, OnDestroy {
     busqueda$.subscribe(items => {
       this.busqueda = items;
       if (items.length > 0 ) {
-      this.spinner.hide();
-      this.show = true;
+        setTimeout(() => {
+          /** spinner ends after 5 seconds */
+          this.spinner.hide();
+
+        }, 1500);
+        this.show = true;
       } else {
         this.show = false;
       }

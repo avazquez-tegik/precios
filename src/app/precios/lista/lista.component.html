@@ -13,8 +13,8 @@
     <div class="col-md-12">
       <div class="mb-5">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Articulo" [(ngModel)]="text" />
-          <span class="input-group-addon" id="basic-addon2" (click)="find()">Buscar</span>
+          <input type="text"  (keydown.enter)="find()" class="form-control" placeholder="pantalla" [(ngModel)]="text" />
+          <span class="input-group-addon" id="basic-addon2" (click)="find()" (keydown.enter)="find()" >Buscar</span>
         </div>
       </div>
       <hr />
@@ -149,9 +149,9 @@
             </a>
 
               <div class="product-links">
-                <a href=""><i class="fa fa-heart"></i></a>
                 <a (click)="agregarCarrito(item)"><i class="fa fa-shopping-cart"></i></a>
-                <a href="{{ item.enlace_informacion }}" target="_blank"><i class="fa fa-shopping-bag"></i></a>
+                <a><i class="fa fa-rocket" info="hola"></i></a>
+                <a ><i  class="fa fa-thumbs-down"></i></a>
               </div>
             </div>
           </div>
