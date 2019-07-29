@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
 @Pipe({
   name: 'filtros',
 

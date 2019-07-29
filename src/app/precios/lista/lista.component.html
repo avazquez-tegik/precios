@@ -1,6 +1,22 @@
 <ngx-spinner bdOpacity=0.7 bdColor="#ecf0f5" size="large" color="#4ed7ea" type="ball-fussion" [fullScreen]="true">
   <p style="color: #4ed7ea"> Loading... </p>
 </ngx-spinner>
+
+
+<div class="container-fluid col-md-2 myFloat_Right">
+<div *ngFor="let tiendasCompleta of tiendasCompletas">
+  <div >
+    <button class="buttonc center" *ngIf= "!tiendasCompleta.termino"><i *ngIf= "!tiendasCompleta.termino" class="fa fa-spinner fa-spin"></i>  {{tiendasCompleta.title}}</button>
+    <button class="buttony center" *ngIf= "tiendasCompleta.termino"><i *ngIf= "tiendasCompleta.termino" class="fa fa-check"></i>  {{tiendasCompleta.title}}</button>
+  </div>
+
+
+
+
+
+</div>
+</div>
+
 <div class="container-fluid">
   <nav class="navbar">
     <div class="form-inline my-2 my-lg-0">

@@ -1,5 +1,9 @@
 /* nav bar search box - drop down menu button */
 
+.myFloat_Right {
+  float: right;
+}
+
 .center {
   display: block;
   margin-left: auto;
@@ -245,6 +249,38 @@
 
 .product-links a:hover {
     color: #fbb72c;
+}
+
+
+.buttony {
+  display: inline-block;
+  border-radius: 4px;
+  background-color:#20aa3e;
+  border: none;
+  color: #FFFFFF;
+  text-align: left;
+  font-size: 10px;
+  padding: 10px;
+  width: 100px;
+  transition: all 0.9s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+
+.buttonc {
+  display: inline-block;
+  border-radius: 4px;
+  background-color:#4ed7ea;
+  border: none;
+  color: #FFFFFF;
+  text-align: left;
+  font-size: 10px;
+  padding: 10px;
+  width: 100px;
+  transition: all 0.9s;
+  cursor: pointer;
+  margin: 5px;
 }
 
 

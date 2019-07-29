@@ -35,7 +35,7 @@ export class ListaComponent implements OnInit, OnDestroy {
   public filtroTiendas: any[];
   public nb = false;
 
-
+  public filtroTiendas2: any[];
 
 
   public destacadoForm: FormGroup = new FormGroup({
@@ -54,20 +54,17 @@ export class ListaComponent implements OnInit, OnDestroy {
 
   filterPriceMin = 100;
   filterPriceMax = 500000;
-
   carritoDoc: AngularFirestoreDocument < any > ;
   destacadosDoc: AngularFirestoreDocument < any > ;
-
   busqueda: any[];
-
   mi_carrito: any = {};
   destacados: any = {};
-
   articulos: Articulo[] = [];
   user: any;
-
-
   options: any[] = cadenas;
+  bandera = false;
+  tiendasCompletas: any[];
+
 
   constructor(private searcher: SearchService,
     private spinner: NgxSpinnerService,
@@ -141,12 +138,18 @@ export class ListaComponent implements OnInit, OnDestroy {
 
 
   public async find() {
+    this.filtroTiendas2 = [];
+
+    this.tiendasCompletas = [];
+
+
+
+
 
     // Muestra el spinner
     this.spinner.show();
-
-
-// Colocar el valor por defecto en el contiene
+    this.bandera = false;
+   // Colocar el valor por defecto en el contiene
     this.contieneForm.patchValue({
       term: this.text
     });
@@ -168,7 +171,7 @@ export class ListaComponent implements OnInit, OnDestroy {
     let borrado = await this.searcher.borrar(this.user.id).toPromise();
 
     // Empieza a escuchar en firebase para ver cuales sera los valores que se insertara con el lambda
-    const busqueda$ = this.afs.collection('busqueda/' + this.user.id + "/resultados", ref => ref.orderBy('created_at'))
+    const busqueda$ = this.afs.collection('busqueda/' + this.user.id + '/resultados', ref => ref.orderBy('created_at'))
       .valueChanges();
 
     // Envia todas la solicitudes al mismo tiempo
@@ -178,6 +181,9 @@ export class ListaComponent implements OnInit, OnDestroy {
     // Escucha los cambios en firebase y cuando ya tenga la primer registro, ocultara el spinner
     busqueda$.subscribe(items => {
       this.busqueda = items;
+      this.tiendasCompletas = [];
+    // console.log(this.getTiendasIncluidas());
+    // console.log(items);
       if (items.length > 0 ) {
         setTimeout(() => {
           /** spinner ends after 5 seconds */
@@ -188,13 +194,25 @@ export class ListaComponent implements OnInit, OnDestroy {
       } else {
         this.show = false;
       }
-      /*this.busqueda = this.fp.transform(this.busqueda, {
-        search0: this.text,
-        search: this.contieneForm.value.term,
-        min: this.filterPriceMin,
-        max: this.filterPriceMax,
-        tiendas: this.optionCadenasForm.value
-      });*/
+
+    if(this.bandera === false) {
+    this.tiendasCompletas = this.getTiendasIncluidas();
+      for (let j = 0; j < this.busqueda.length; j++) {
+        if (this.busqueda[j].end === true) {
+            if(!(this.filtroTiendas2.includes(this.busqueda[j].cadena))) {
+
+                        this.filtroTiendas2.push(this.busqueda[j].cadena);
+                        for (let i = 0; i < this.tiendasCompletas.length; i++) {
+                          if( this.tiendasCompletas[i].nombreServ === this.busqueda[j].cadena) {
+                            this.tiendasCompletas[i]['termino'] = true;
+                          }
+                        }
+
+
+               }
+            }
+          }
+        }
 
     });
 
@@ -293,10 +311,21 @@ export class ListaComponent implements OnInit, OnDestroy {
   }
 
 
+
+
+
+
   public nuevoBusqueda() {
     this.show = false;
     this.searcher.borrar(this.user.id).subscribe(item => {});
+    this.filtroTiendas2 = [];
+    this.busqueda = [];
+    this.bandera = true;
+    for (let i = 0; i < this.tiendasCompletas.length; i++) {
+        this.tiendasCompletas[i]['termino'] = false;
 
+
+    }
   }
 
 
