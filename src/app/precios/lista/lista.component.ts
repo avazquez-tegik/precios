@@ -13,6 +13,7 @@ import { FiltrosPipe } from '../pipes/filtros.pipe';
 import { cadenas } from '../data/cadenas';
 
 
+
 @Component({
   selector: 'app-lista',
   templateUrl: './lista.component.html',
@@ -20,6 +21,8 @@ import { cadenas } from '../data/cadenas';
   providers: [SearchService, FiltrosPipe]
 })
 export class ListaComponent implements OnInit, OnDestroy {
+
+
 
   @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
   modalRef: BsModalRef;
@@ -86,6 +89,10 @@ export class ListaComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+
+
+
+
 
     this.show = false;
     let user = this.authService.getUser().subscribe(user => {
@@ -333,4 +340,9 @@ export class ListaComponent implements OnInit, OnDestroy {
     this.nuevoBusqueda();
   }
 
+  public resetCadenasForm() {
+    this.optionCadenasForm.reset();
+  }
+
 }
+

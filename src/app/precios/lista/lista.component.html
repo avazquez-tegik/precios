@@ -17,6 +17,8 @@
 </div>
 </div>
 
+
+
 <div class="container-fluid">
   <nav class="navbar">
     <div class="form-inline my-2 my-lg-0">
@@ -35,25 +37,29 @@
       </div>
       <hr />
 
-      <div class="row" *ngIf="!show">
-        <div class="col-md-5 col-xs-12" [formGroup]="optionCadenasForm">
-          <mk-box [isSolid]="true" boxColor="#fff" [isCollapsable]="true" [isRemovable]="false" header="Tiendas"
-            [isCollapsed]="true">
-            <mk-accordion-group [isMultiple]="false">
-              <mk-accordion [header]="c.category" *ngFor="let c of options">
-                <div class="checkbox" *ngFor="let branch of c.branches">
-                  <label>
-                    <input class="checkbox" type="checkbox" [formControlName]="branch.name_control" />
-                    {{branch.title}}
-                  </label>
-                </div>
-              </mk-accordion>
-            </mk-accordion-group>
-          </mk-box>
+
+
+
+
+
+  <p-tabView class="row" *ngIf="!show"  class="col-md-5 col-xs-12"  [formGroup]="optionCadenasForm">
+      <div class="pull-right">
+          <button type="button"  class="ui-button-secondary"  (click)="resetCadenasForm()">
+            <i class="fa fa-eraser"></i>
+          </button>
         </div>
-      </div>
-    </div>
-  </div>
+      <p-tabPanel [header]="c.category" *ngFor="let c of options">
+        <div class="checkbox" *ngFor="let branch of c.branches">
+          <label>
+            <input class="checkbox" type="checkbox" [formControlName]="branch.name_control" />
+            {{branch.title}}
+          </label>
+        </div>
+      </p-tabPanel>
+  </p-tabView>
+
+
+
 
 
 
@@ -219,5 +225,3 @@
     </div>
   </div>
 </ng-template>
-
-

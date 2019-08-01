@@ -13,6 +13,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AuthService } from '../core/services/auth.service';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import {TabViewModule} from 'primeng/tabview';
+import {TabMenuModule} from 'primeng/tabmenu';
+import {ButtonModule} from 'primeng/button';
+
+
 
 
 @NgModule({
@@ -27,7 +32,12 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     MkAccordionModule,
     BoxModule,
     NgxPaginationModule,
-    NgxSpinnerModule, ModalModule.forRoot()
+    NgxSpinnerModule, ModalModule.forRoot(),
+    TabViewModule,
+    TabMenuModule,
+    ButtonModule
+
+
   ],
   providers: [AuthService]
 })
