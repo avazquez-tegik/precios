@@ -11,8 +11,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FiltrosPipe } from '../pipes/filtros.pipe';
 import { cadenas } from '../data/cadenas';
-
-
+import {MenuItem} from 'primeng/api';
 
 @Component({
   selector: 'app-lista',
@@ -39,6 +38,8 @@ export class ListaComponent implements OnInit, OnDestroy {
   public nb = false;
 
   public filtroTiendas2: any[];
+
+  items2: MenuItem[];
 
 
   public destacadoForm: FormGroup = new FormGroup({
@@ -85,6 +86,12 @@ export class ListaComponent implements OnInit, OnDestroy {
       }
     }
 
+
+
+    for (let i = 0; i < this.options.length; i++) {
+
+      this.options[i]['corto'] = this.options[i].category.slice(0, 3).toUpperCase();
+    }
   }
 
 
@@ -190,7 +197,7 @@ export class ListaComponent implements OnInit, OnDestroy {
       this.busqueda = items;
       this.tiendasCompletas = [];
     // console.log(this.getTiendasIncluidas());
-    // console.log(items);
+      console.log(items);
       if (items.length > 0 ) {
         setTimeout(() => {
           /** spinner ends after 5 seconds */
@@ -202,16 +209,15 @@ export class ListaComponent implements OnInit, OnDestroy {
         this.show = false;
       }
 
-    if(this.bandera === false) {
-    this.tiendasCompletas = this.getTiendasIncluidas();
+    if (this.bandera === false) {
+      this.tiendasCompletas = this.getTiendasIncluidas();
       for (let j = 0; j < this.busqueda.length; j++) {
         if (this.busqueda[j].end === true) {
-            if(!(this.filtroTiendas2.includes(this.busqueda[j].cadena))) {
-
+            if (!(this.filtroTiendas2.includes(this.busqueda[j].cadena))) {
                         this.filtroTiendas2.push(this.busqueda[j].cadena);
                         for (let i = 0; i < this.tiendasCompletas.length; i++) {
-                          if( this.tiendasCompletas[i].nombreServ === this.busqueda[j].cadena) {
-                            this.tiendasCompletas[i]['termino'] = true;
+                          if ( this.tiendasCompletas[i].nombreServ === this.busqueda[j].cadena) {
+                              this.tiendasCompletas[i]['termino'] = true;
                           }
                         }
 
@@ -341,7 +347,7 @@ export class ListaComponent implements OnInit, OnDestroy {
   }
 
   public resetCadenasForm() {
-    this.optionCadenasForm.reset();
+     this.optionCadenasForm.reset();
   }
 
 }

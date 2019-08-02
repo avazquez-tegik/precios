@@ -9,13 +9,11 @@
     <button class="buttonc center" *ngIf= "!tiendasCompleta.termino"><i *ngIf= "!tiendasCompleta.termino" class="fa fa-spinner fa-spin"></i>  {{tiendasCompleta.title}}</button>
     <button class="buttony center" *ngIf= "tiendasCompleta.termino"><i *ngIf= "tiendasCompleta.termino" class="fa fa-check"></i>  {{tiendasCompleta.title}}</button>
   </div>
-
-
-
-
-
 </div>
 </div>
+
+
+
 
 
 
@@ -41,25 +39,26 @@
 
 
 
+      <p-tabView class="wrap" *ngIf="!show"  class="col-md-6 col-xs-12"  [formGroup]="optionCadenasForm">
+        <div class="pull-right">
+            <button type="button"  class="ui-button-secondary"  (click)="resetCadenasForm()">
+              <i class="fa fa-eraser"></i>
+            </button>
+          </div>
 
-  <p-tabView class="row" *ngIf="!show"  class="col-md-6 col-xs-12"  [formGroup]="optionCadenasForm">
-      <div class="pull-right">
-          <button type="button"  class="ui-button-secondary"  (click)="resetCadenasForm()">
-            <i class="fa fa-eraser"></i>
-          </button>
-        </div>
-      <p-tabPanel [header]="c.category" *ngFor="let c of options">
-        <div class="checkbox" *ngFor="let branch of c.branches">
-          <label>
-            <input class="checkbox" type="checkbox" [formControlName]="branch.name_control" />
-            {{branch.title}}
-          </label>
-        </div>
-      </p-tabPanel>
-  </p-tabView>
+        <p-tabPanel [header] = c.corto  *ngFor="let c of options" [tooltip]="c.category">
+          <div class="checkbox" *ngFor="let branch of c.branches">
+            <label>
+              <input class="checkbox" type="checkbox" [formControlName]="branch.name_control" />
+              {{branch.title}}
+            </label>
+          </div>
+        </p-tabPanel>
+    </p-tabView>
 
 
-
+    </div>
+  </div>
 
 
 
@@ -81,11 +80,7 @@
                 <span class="form-check-label">
                   {{filtroTienda.title}}
                 </span>
-
-
               </p>
-
-
             </mk-accordion>
           </mk-accordion-group>
         </mk-box>
@@ -225,3 +220,5 @@
     </div>
   </div>
 </ng-template>
+
+
