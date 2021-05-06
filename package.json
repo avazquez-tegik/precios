@@ -62,7 +62,7 @@
     "core-js": "^2.5.4",
     "firebase": "^5.8.4",
     "font-awesome": "^4.7.0",
-    "highcharts": "^7.0.3",
+    "highcharts": "^9.0.0",
     "highcharts-angular": "^2.4.0",
     "ionicons": "^2.0.1",
     "ng-chartist": "^4.1.0",
